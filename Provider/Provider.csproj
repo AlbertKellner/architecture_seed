@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RootNamespace>Provider</RootNamespace>
+    <AssemblyName>Provider</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Service.csproj.vspscc" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="4.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CustomExceptions\CustomExceptions.csproj" />
+    <ProjectReference Include="..\DataEntity\DataEntity.csproj" />
+    <ProjectReference Include="..\DataTransferObject\DataTransferObject.csproj" />
+    <ProjectReference Include="..\Repository\Repository.csproj" />
+  </ItemGroup>
+
+</Project>
