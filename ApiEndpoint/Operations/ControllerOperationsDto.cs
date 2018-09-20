@@ -10,8 +10,13 @@
     using Provider.Contracts;
     using ViewModels.Response;
 
-    public class ControllerOperationsDto<TEntityDto, TEntity, TRequestModel, TResponseModel> : IBasicOperation<TRequestModel, TResponseModel>
-        where TEntityDto : BaseEntityDto, new() where TEntity : new() where TRequestModel : new() where TResponseModel : BaseResponseModel, new()
+    public class
+        ControllerOperationsDto<TEntityDto, TEntity, TRequestModel, TResponseModel> : IBasicOperation<TRequestModel,
+            TResponseModel>
+        where TEntityDto : BaseEntityDto, new()
+        where TEntity : new()
+        where TRequestModel : new()
+        where TResponseModel : BaseResponseModel, new()
     {
         private const string MissingHeaderUserIdError = "Missing header UserId, value must be Integer";
         private readonly IGenericProviderDto<TEntityDto, TEntity> _genericProviderDto;
@@ -30,7 +35,8 @@
             var hasUserId = int.TryParse(headerUserId, out var userId);
 
             if (!hasUserId)
-                return BaseResponse.ResponseEntityValidation((List<TResponseModel>) null, new Exception(MissingHeaderUserIdError));
+                return BaseResponse.ResponseEntityValidation((List<TResponseModel>) null,
+                    new Exception(MissingHeaderUserIdError));
 
             try
             {
@@ -43,7 +49,9 @@
 
             var responseModel = _mapper.Map<List<TEntity>, List<TResponseModel>>(responseEntities);
 
-            return !responseModel.Any() ? BaseResponse.ResponseNotFound((List<TResponseModel>) null) : BaseResponse.ResponseOk(responseModel);
+            return !responseModel.Any()
+                ? BaseResponse.ResponseNotFound((List<TResponseModel>) null)
+                : BaseResponse.ResponseOk(responseModel);
         }
 
         public ApiResponse<TResponseModel> Get(string headerUserId, int id)
@@ -53,7 +61,8 @@
             var hasUserId = int.TryParse(headerUserId, out var userId);
 
             if (!hasUserId)
-                return BaseResponse.ResponseMissingHeader((TResponseModel) null, new Exception(MissingHeaderUserIdError));
+                return BaseResponse.ResponseMissingHeader((TResponseModel) null,
+                    new Exception(MissingHeaderUserIdError));
 
             try
             {
@@ -66,7 +75,9 @@
 
             var responseModel = _mapper.Map<TEntity, TResponseModel>(responseEntity);
 
-            return responseModel == null || responseModel.Id == 0 ? BaseResponse.ResponseNotFound((TResponseModel) null) : BaseResponse.ResponseOk(responseModel);
+            return responseModel == null || responseModel.Id == 0
+                ? BaseResponse.ResponseNotFound((TResponseModel) null)
+                : BaseResponse.ResponseOk(responseModel);
         }
 
         public ApiResponse<TResponseModel> Insert(string headerUserId, TRequestModel requestModel)
@@ -77,7 +88,8 @@
             var hasUserId = int.TryParse(headerUserId, out var userId);
 
             if (!hasUserId)
-                return BaseResponse.ResponseMissingHeader((TResponseModel) null, new Exception(MissingHeaderUserIdError));
+                return BaseResponse.ResponseMissingHeader((TResponseModel) null,
+                    new Exception(MissingHeaderUserIdError));
 
             try
             {
@@ -101,7 +113,8 @@
             var hasUserId = int.TryParse(headerUserId, out var userId);
 
             if (!hasUserId)
-                return BaseResponse.ResponseMissingHeader((TResponseModel) null, new Exception(MissingHeaderUserIdError));
+                return BaseResponse.ResponseMissingHeader((TResponseModel) null,
+                    new Exception(MissingHeaderUserIdError));
 
             try
             {

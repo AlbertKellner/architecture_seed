@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("TaskLists")]
+    [Table("TaskList")] //TODO:Renomear para TaskLists
     public class TaskListEntity : BaseEntity
     {
         public string Name { get; set; }

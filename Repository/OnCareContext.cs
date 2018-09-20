@@ -1,5 +1,6 @@
 ﻿namespace Repository
 {
+    using DataEntity;
     using DataEntity.Model;
     using DataEntity.Model.Relations;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -19,6 +20,9 @@
         public DbSet<FarmaciaEntity> Farmacia { get; set; }
         public DbSet<TodoListEntity> Medico { get; set; }
         public DbSet<PacienteEntity> Paciente { get; set; }
+
+        public DbSet<TaskEntity> Task { get; set; }
+        public DbSet<TaskListEntity> TaskList { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
             optionsBuilder

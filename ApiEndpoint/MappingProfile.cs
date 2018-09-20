@@ -2,6 +2,7 @@
 {
     using AutoMapper;
     using AutoMapper.EquivalencyExpression;
+    using DataEntity;
     using DataEntity.Model;
     using DataTransferObject;
     using ViewModels.Request;
@@ -23,6 +24,9 @@
             CreateMap<MedicoRequestModel, MedicoDto>();
             CreateMap<PacienteRequestModel, PacienteDto>();
 
+            CreateMap<TaskEntity, TaskDto>();
+            CreateMap<TaskListEntity, TaskListDto>();
+            
             CreateMap<LaboratorioEntity, LaboratorioResponseModel>();
             CreateMap<FarmaciaEntity, FarmaciaResponseModel>();
         }

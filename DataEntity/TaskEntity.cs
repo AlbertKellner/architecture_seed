@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("Tasks")]
+    [Table("Task")] //TODO:Renomear para Tasks
     public class TaskEntity : BaseEntity
     {
         public string Description { get; set; }
