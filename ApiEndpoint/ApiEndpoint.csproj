@@ -34,6 +34,7 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
     <PackageReference Include="NSwag.AspNetCore" Version="11.17.19" />
+    <PackageReference Include="xunit" Version="2.4.0" />
   </ItemGroup>
 
   <ItemGroup>
