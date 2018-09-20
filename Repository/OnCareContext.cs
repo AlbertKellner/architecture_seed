@@ -17,7 +17,7 @@
 
         public DbSet<LaboratorioEntity> Laboratorio { get; set; }
         public DbSet<FarmaciaEntity> Farmacia { get; set; }
-        public DbSet<MedicoEntity> Medico { get; set; }
+        public DbSet<TodoListEntity> Medico { get; set; }
         public DbSet<PacienteEntity> Paciente { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>

@@ -200,7 +200,7 @@
 
             services.AddTransient(typeof(IGenericProviderDto<LaboratorioDto, LaboratorioEntity>), typeof(LaboratorioProvider));
             services.AddTransient(typeof(IGenericProviderDto<FarmaciaDto, FarmaciaEntity>), typeof(FarmaciaProvider));
-            services.AddTransient(typeof(IGenericProviderDto<MedicoDto, MedicoEntity>), typeof(MedicoProvider));
+            services.AddTransient(typeof(IGenericProviderDto<MedicoDto, TodoListEntity>), typeof(MedicoProvider));
             services.AddTransient(typeof(IGenericProviderDto<PacienteDto, PacienteEntity>), typeof(PacienteProvider));
 
             services.AddTransient(typeof(IParentChildrenProviderDto<FarmaciaDto, FarmaciaEntity>), typeof(LaboratorioFarmaciaProvider));

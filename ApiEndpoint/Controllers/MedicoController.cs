@@ -15,10 +15,10 @@
     [Route("api/[controller]")]
     public class MedicoController : Controller, IController<MedicoRequestModel, MedicoResponseModel>
     {
-        private readonly ControllerOperationsDto<MedicoDto, MedicoEntity, MedicoRequestModel, MedicoResponseModel> _controllerOperationsDto;
+        private readonly ControllerOperationsDto<MedicoDto, TodoListEntity, MedicoRequestModel, MedicoResponseModel> _controllerOperationsDto;
 
-        public MedicoController(IGenericProviderDto<MedicoDto, MedicoEntity> provider, IMapper mapper) =>
-            _controllerOperationsDto = new ControllerOperationsDto<MedicoDto, MedicoEntity, MedicoRequestModel, MedicoResponseModel>(provider, mapper);
+        public MedicoController(IGenericProviderDto<MedicoDto, TodoListEntity> provider, IMapper mapper) =>
+            _controllerOperationsDto = new ControllerOperationsDto<MedicoDto, TodoListEntity, MedicoRequestModel, MedicoResponseModel>(provider, mapper);
 
         [HttpGet]
         public ApiResponse<List<MedicoResponseModel>> GetAll([FromHeader(Name = "UserId")] string headerUserId) => _controllerOperationsDto.GetAll(headerUserId);

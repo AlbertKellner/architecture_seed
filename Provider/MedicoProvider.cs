@@ -11,22 +11,22 @@
     using DataTransferObject;
     using Repository.Contracts;
 
-    public class MedicoProvider : IGenericProviderDto<MedicoDto, MedicoEntity>
+    public class MedicoProvider : IGenericProviderDto<MedicoDto, TodoListEntity>
     {
         private readonly IMapper _mapper;
-        private readonly IRepository<MedicoEntity> _repository;
+        private readonly IRepository<TodoListEntity> _repository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<UsuarioEntity> _usuarioRepository;
 
         public MedicoProvider(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
-            _repository = _unitOfWork.GetRepository<MedicoEntity>();
+            _repository = _unitOfWork.GetRepository<TodoListEntity>();
             _usuarioRepository = _unitOfWork.GetRepository<UsuarioEntity>();
             _mapper = mapper;
         }
 
-        public IEnumerable<MedicoEntity> All(int userId) => _repository.GetList().Items;
+        public IEnumerable<TodoListEntity> All(int userId) => _repository.GetList().Items;
 
         public void Delete(int userId, MedicoDto entity)
         {
@@ -34,11 +34,11 @@
             _unitOfWork.SaveChanges();
         }
 
-        public MedicoEntity GetById(int userId, int id) => _repository.Single(e => e.Id == id);
+        public TodoListEntity GetById(int userId, int id) => _repository.Single(e => e.Id == id);
 
-        public MedicoEntity Insert(int userId, MedicoDto entityDto)
+        public TodoListEntity Insert(int userId, MedicoDto entityDto)
         {
-            var entity = _mapper.Map<MedicoDto, MedicoEntity>(entityDto);
+            var entity = _mapper.Map<MedicoDto, TodoListEntity>(entityDto);
 
             if (!entity.IsValid())
                 throw new ValidationException(entity.ValidationErrors.First());
@@ -55,14 +55,14 @@
             return entity;
         }
 
-        public MedicoEntity Update(int userId, MedicoDto entityDto)
+        public TodoListEntity Update(int userId, MedicoDto entityDto)
         {
             var isEntityExists = GetById(userId, entityDto.Id)?.Id > 0;
 
             if (!isEntityExists)
                 return null;
 
-            var entity = _mapper.Map<MedicoDto, MedicoEntity>(entityDto);
+            var entity = _mapper.Map<MedicoDto, TodoListEntity>(entityDto);
             entity.UsuarioEntityId = userId;
 
             _repository.Update(entity);
