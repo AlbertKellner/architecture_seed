@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using ApiEndpoint.ViewModels.Response;
 
-    public class TaskListRequestModel : BaseResponseModel
+    public class TaskListResponseModel : BaseResponseModel
     {
         public string Name { get; set; }
 
