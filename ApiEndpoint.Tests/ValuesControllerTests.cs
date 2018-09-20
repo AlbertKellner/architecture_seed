@@ -26,12 +26,11 @@ namespace ApiEndpoint.Tests
             //Arrange
             var controller = new ValuesController();
 
-            //Act            
+            //Act
             var x = await controller.Get(1);
 
             //Assert
-            Assert.Equal("", x);
+            Assert.Equal("testando testando 2", x);
         }
     }
 }
-

@@ -12,8 +12,9 @@ namespace ApiEndpoint.Controllers
     {
         public async Task<string> Teste(string value)
         {
+
             Thread.Sleep(3000);
-            await Task.Delay(3000);
+            await Task.Delay(0);
 
             return value;
         }
@@ -29,7 +30,6 @@ namespace ApiEndpoint.Controllers
         {
             var x = Teste("testando");
             var y = Teste("testando 2");
-
 
             var a = await x;
             var b = await y;
