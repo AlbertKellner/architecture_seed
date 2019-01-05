@@ -1,22 +1,18 @@
-﻿using DataEntity;
-using NSwag;
-using NSwag.SwaggerGeneration.Processors.Security;
-
-namespace ApiEndpoint
+﻿namespace ApiEndpoint
 {
     using AutoMapper;
+    using DataEntity;
     using DataEntity.Model;
     using DataTransferObject;
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc.Formatters;
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
+    using NSwag;
+    using NSwag.SwaggerGeneration.Processors.Security;
     using Provider;
     using Provider.Contracts;
     using Repository;
@@ -34,42 +30,28 @@ namespace ApiEndpoint
         {
             services.AddRouting();
 
-            ConfigureIdentityService(services);
-
             ConfigureDependencyInjectionService(services);
 
             services.AddCors();
 
             services.AddAutoMapper();
 
+            ConfigureSwagger(services);
+
             ConfigureJsonReturnService(services);
         }
 
-        private static void ConfigureJsonReturnService(IServiceCollection services) => services.AddMvc(options =>
-                                                                                                       {
-                                                                                                           options.OutputFormatters.RemoveType<TextOutputFormatter>();
-                                                                                                           options.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>();
-                                                                                                       })
-                                                                                               .AddJsonOptions(options => // Resolves a self referencing loop when converting EF Entities to Json
-                                                                                                               {
-                                                                                                                   options.SerializerSettings.ReferenceLoopHandling =
-                                                                                                                       ReferenceLoopHandling.Ignore;
-                                                                                                               });
-
-        private void ConfigureIdentityService(IServiceCollection services)
-        {
-            services.AddDbContext<OnCareContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-                                                                                 b => b.MigrationsAssembly("AngularASPNETCore2WebApiAuth")));
-
-            services.AddAuthorization(auth =>
-                                      {
-                                          auth.AddPolicy("Bearer",
-                                                         new AuthorizationPolicyBuilder()
-                                                             .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build());
-                                      });
-
-            ConfigureSwagger(services);
-        }
+        private static void ConfigureJsonReturnService(IServiceCollection services)
+            => services.AddMvc(options =>
+                               {
+                                   options.OutputFormatters.RemoveType<TextOutputFormatter>();
+                                   options.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>();
+                               })
+                       .AddJsonOptions(options => // Resolves a self referencing loop when converting EF Entities to Json
+                                       {
+                                           options.SerializerSettings.ReferenceLoopHandling =
+                                               ReferenceLoopHandling.Ignore;
+                                       });
 
         private static IServiceCollection ConfigureSwagger(IServiceCollection services) =>
             services.AddSwaggerDocument(c =>
