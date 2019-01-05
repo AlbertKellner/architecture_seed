@@ -7,7 +7,7 @@
         [Column(Order = 0)]
         public int MedicoId { get; set; }
 
-        public TodoListEntity Medico { get; set; }
+        public MedicoEntity Medico { get; set; }
 
         [Column(Order = 1)]
         public int PacienteId { get; set; }

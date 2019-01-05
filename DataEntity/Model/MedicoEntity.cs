@@ -5,7 +5,7 @@
     using Relations;
 
     [Table("Medicos")]
-    public class TodoListEntity : BaseEntity
+    public class MedicoEntity : BaseEntity
     {
         public int UsuarioEntityId { get; set; }
 
