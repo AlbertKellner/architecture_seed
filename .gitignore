@@ -33,3 +33,6 @@ msbuild.wrn
 .vs/
 .ncrunchproject
 _NCrunch_Sistema
+
+# Detritus
+*.ncrunchsolution
