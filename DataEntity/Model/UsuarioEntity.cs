@@ -19,9 +19,6 @@
         [Required]
         public string IdentityId { get; set; }
 
-        [NotMapped]
-        public AppUser Identity { get; set; }
-
         //public ICollection<LaboratorioEntity> Laboratorios { get; set; }
         //public ICollection<FarmaciaEntity> Farmacias { get; set; }
         //public ICollection<MedicoEntity> Medicos { get; set; }
