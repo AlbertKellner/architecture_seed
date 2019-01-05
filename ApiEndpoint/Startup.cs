@@ -1,8 +1,9 @@
 ﻿using DataEntity;
+using NSwag;
+using NSwag.SwaggerGeneration.Processors.Security;
 
 namespace ApiEndpoint
 {
-    using System.Reflection;
     using AutoMapper;
     using DataEntity.Model;
     using DataTransferObject;
@@ -16,8 +17,6 @@ namespace ApiEndpoint
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
-    using NJsonSchema;
-    using NSwag.AspNetCore;
     using Provider;
     using Provider.Contracts;
     using Repository;
@@ -68,7 +67,26 @@ namespace ApiEndpoint
                                                          new AuthorizationPolicyBuilder()
                                                              .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build());
                                       });
+
+            ConfigureSwagger(services);
         }
+
+        private static IServiceCollection ConfigureSwagger(IServiceCollection services) =>
+            services.AddSwaggerDocument(c =>
+            {
+                c.DocumentName = "apidocs";
+                c.Title = "Sample API";
+                c.Version = "v1";
+                c.Description = "The sample API documentation description.";
+                c.DocumentProcessors.Add(new SecurityDefinitionAppender("APIKey", new SwaggerSecurityScheme
+                {
+                    Type = SwaggerSecuritySchemeType.ApiKey,
+                    Name = "APIKey",
+                    In = SwaggerSecurityApiKeyLocation.Header,
+                    Description = "APIKey"
+                }));
+                c.OperationProcessors.Add(new OperationSecurityScopeProcessor("APIKey"));
+            });
 
         private static void ConfigureDependencyInjectionService(IServiceCollection services)
         {
@@ -95,29 +113,19 @@ namespace ApiEndpoint
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, OnCareContext context)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
-
-            ConfigureSwagger(app);
 
             ConfigureCors(app);
 
             app.UseStaticFiles();
 
+            app.UseSwagger();
+            app.UseSwaggerUi3();
+
             app.UseMvc();
         }
 
         private static void ConfigureCors(IApplicationBuilder app) => app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-
-        // Enable the Swagger UI middleware and the Swagger generator
-        private static void ConfigureSwagger(IApplicationBuilder app) => app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly,
-                                                                                          settings =>
-                                                                                          {
-                                                                                              settings.GeneratorSettings.DefaultPropertyNameHandling =
-                                                                                                  PropertyNameHandling.CamelCase;
-                                                                                          });
     }
 }

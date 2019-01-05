@@ -4,7 +4,6 @@
 
     public class UsuarioResponseModel : BaseResponseModel
     {
-        public int Id { get; set; }
         public List<LaboratorioResponseModel> Laboratorios { get; set; }
         public List<FarmaciaResponseModel> Farmacias { get; set; }
         public List<MedicoResponseModel> Medicos { get; set; }
