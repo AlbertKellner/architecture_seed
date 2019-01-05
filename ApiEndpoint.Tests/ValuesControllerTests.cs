@@ -20,17 +20,17 @@ namespace ApiEndpoint.Tests
 
     public class ValuesControllerTests
     {
-        [Fact]
-        public async Task TestController2()
-        {
-            //Arrange
-            var controller = new ValuesController();
+        //[Fact]
+        //public async Task TestController2()
+        //{
+        //    //Arrange
+        //    var controller = new ValuesController();
 
-            //Act
-            var x = await controller.Get(1);
+        //    //Act
+        //    var x = await controller.Get(1);
 
-            //Assert
-            Assert.Equal("testando testando 2", x);
-        }
+        //    //Assert
+        //    Assert.Equal("testando testando 2", x);
+        //}
     }
 }
