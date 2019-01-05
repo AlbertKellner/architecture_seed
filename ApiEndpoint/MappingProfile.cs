@@ -13,7 +13,7 @@
         public MappingProfile()
         {
             CreateMap<AccountRecoveryRequestModel, UsuarioEntity>();
-            CreateMap<AccountRegisterRequestModel, AppUser>();
+            //CreateMap<AccountRegisterRequestModel, AppUser>();
             CreateMap<AccountCredentialsRequestModel, UsuarioEntity>();
 
             //CreateMap<UsuarioEntity, UsuarioRequestModel>().EqualityComparison((origin, destiny) => origin.Id == destiny.Id);

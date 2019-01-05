@@ -5,7 +5,6 @@ namespace ApiEndpoint
     using System;
     using System.Reflection;
     using System.Text;
-    using Auth;
     using AutoMapper;
     using DataEntity.Model;
     using DataTransferObject;
@@ -13,7 +12,6 @@ namespace ApiEndpoint
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
@@ -69,65 +67,65 @@ namespace ApiEndpoint
         {
             // jwt wire up
             // GetByIdentity options from app settings
-            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+            //var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
 
-            var tokenValidationParameters = new TokenValidationParameters
-                                            {
-                                                ValidateIssuer = true,
-                                                ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
-                                                ValidateAudience = true,
-                                                ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
-                                                ValidateIssuerSigningKey = true,
-                                                IssuerSigningKey = _signingKey,
-                                                RequireExpirationTime = false,
-                                                ValidateLifetime = true,
-                                                ClockSkew = TimeSpan.Zero
-                                            };
+            //var tokenValidationParameters = new TokenValidationParameters
+            //                                {
+            //                                    ValidateIssuer = true,
+            //                                    ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
+            //                                    ValidateAudience = true,
+            //                                    ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
+            //                                    ValidateIssuerSigningKey = true,
+            //                                    IssuerSigningKey = _signingKey,
+            //                                    RequireExpirationTime = false,
+            //                                    ValidateLifetime = true,
+            //                                    ClockSkew = TimeSpan.Zero
+            //                                };
 
-            services.AddAuthentication(options =>
-                                       {
-                                           options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                                           options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                                       }).AddJwtBearer(configureOptions =>
-                                                       {
-                                                           configureOptions.ClaimsIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
-                                                           configureOptions.TokenValidationParameters = tokenValidationParameters;
-                                                           configureOptions.SaveToken = true;
-                                                       });
+            //services.AddAuthentication(options =>
+            //                           {
+            //                               options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //                               options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //                           }).AddJwtBearer(configureOptions =>
+            //                                           {
+            //                                               configureOptions.ClaimsIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+            //                                               configureOptions.TokenValidationParameters = tokenValidationParameters;
+            //                                               configureOptions.SaveToken = true;
+            //                                           });
 
             // api user claim policy
-            services.AddAuthorization(options =>
-                                      {
-                                          options.AddPolicy("ApiUser",
-                                                            policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
-                                      });
+            //services.AddAuthorization(options =>
+            //                          {
+            //                              options.AddPolicy("ApiUser",
+            //                                                policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
+            //                          });
 
             // add identity
-            var builder = services.AddIdentityCore<AppUser>(o =>
-                                                            {
-                                                                // configure identity options
-                                                                o.Password.RequireDigit = false;
-                                                                o.Password.RequireLowercase = false;
-                                                                o.Password.RequireUppercase = false;
-                                                                o.Password.RequireNonAlphanumeric = false;
-                                                                o.Password.RequiredLength = 2;
-                                                            });
-            builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
-            builder.AddEntityFrameworkStores<OnCareContext>().AddDefaultTokenProviders();
+            //var builder = services.AddIdentityCore<AppUser>(o =>
+            //                                                {
+            //                                                    // configure identity options
+            //                                                    o.Password.RequireDigit = false;
+            //                                                    o.Password.RequireLowercase = false;
+            //                                                    o.Password.RequireUppercase = false;
+            //                                                    o.Password.RequireNonAlphanumeric = false;
+            //                                                    o.Password.RequiredLength = 2;
+            //                                                });
+            //builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
+            //builder.AddEntityFrameworkStores<OnCareContext>().AddDefaultTokenProviders();
         }
 
         private void ConfigureJwtIssuerOptions(IServiceCollection services)
         {
             // GetByIdentity options from app settings
-            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+            //var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
 
             // Configure JwtIssuerOptions
-            services.Configure<JwtIssuerOptions>(options =>
-                                                 {
-                                                     options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
-                                                     options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
-                                                     options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
-                                                 });
+            //services.Configure<JwtIssuerOptions>(options =>
+            //                                     {
+            //                                         options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+            //                                         options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
+            //                                         options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
+            //                                     });
         }
 
         private static void ConfigureJsonReturnService(IServiceCollection services) => services.AddMvc(options =>
@@ -146,10 +144,10 @@ namespace ApiEndpoint
             services.AddDbContext<OnCareContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                                                                                  b => b.MigrationsAssembly("AngularASPNETCore2WebApiAuth")));
 
-            services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<OnCareContext>().AddDefaultTokenProviders();
+            //services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<OnCareContext>().AddDefaultTokenProviders();
 
-            var signingConfigurations = new SigningConfigurations();
-            services.AddSingleton(signingConfigurations);
+            //var signingConfigurations = new SigningConfigurations();
+            //services.AddSingleton(signingConfigurations);
 
             //var tokenConfigurations = new TokenConfigurations();
             //new ConfigureFromConfigurationOptions<TokenConfigurations>(
@@ -212,12 +210,11 @@ namespace ApiEndpoint
 
             services.AddTransient<IAuthenticationProvider, AuthenticationProvider>();
 
-            services.AddSingleton<IJwtFactory, JwtFactory>();
+            //services.AddSingleton<IJwtFactory, JwtFactory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, OnCareContext context, UserManager<AppUser> userManager,
-                              RoleManager<IdentityRole> roleManager)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, OnCareContext context)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -233,7 +230,7 @@ namespace ApiEndpoint
 
             //app.UseElmahIo();
 
-            ConfigureIdentity(context, userManager, roleManager);
+            //ConfigureIdentity(context, userManager, roleManager);
 
             app.UseMvc();
         }
@@ -241,8 +238,8 @@ namespace ApiEndpoint
         // Criação de estruturas, usuários e permissões
         // na base do ASP.NET Identity Core (caso ainda não
         // existam)
-        private static void ConfigureIdentity(OnCareContext context, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager) =>
-            new IdentityInitializer(context, userManager, roleManager).Initialize();
+        //private static void ConfigureIdentity(OnCareContext context, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager) =>
+        //    new IdentityInitializer(context, userManager, roleManager).Initialize();
 
         // Shows UseCors with CorsPolicyBuilder.
         private static void ConfigureCors(IApplicationBuilder app) => app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());

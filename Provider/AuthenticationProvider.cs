@@ -6,19 +6,19 @@
     using System.Threading.Tasks;
     using CustomExceptions;
     using DataEntity.Model;
-    using Microsoft.AspNetCore.Identity;
     using Provider.Contracts;
     using Repository.Contracts;
 
     public class AuthenticationProvider : IAuthenticationProvider
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly UserManager<AppUser> _userManager;
+        //private readonly UserManager<AppUser> _userManager;
 
-        public AuthenticationProvider(IUnitOfWork unitOfWork, UserManager<AppUser> userManager)
+        //public AuthenticationProvider(IUnitOfWork unitOfWork, UserManager<AppUser> userManager)
+        public AuthenticationProvider(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _userManager = userManager;
+            //_userManager = userManager;
         }
 
         [Obsolete]
@@ -30,31 +30,31 @@
         }
 
 
-        public async Task<bool> RegisterAccount(AppUser requestIdentity, string password)
-        {
-            var identityResult = await _userManager.CreateAsync(requestIdentity, password);
+        //public async Task<bool> RegisterAccount(AppUser requestIdentity, string password)
+        //{
+        //    var identityResult = await _userManager.CreateAsync(requestIdentity, password);
 
-            if (!identityResult.Succeeded)
-            {
-                var erros = new StringBuilder();
+        //    if (!identityResult.Succeeded)
+        //    {
+        //        var erros = new StringBuilder();
 
-                foreach (var identityResultError in identityResult.Errors)
-                    erros.Append(identityResultError.Description + " - ");
+        //        foreach (var identityResultError in identityResult.Errors)
+        //            erros.Append(identityResultError.Description + " - ");
 
-                throw new Exception(erros.ToString());
-            }
+        //        throw new Exception(erros.ToString());
+        //    }
 
-            var usuarioEntity = new UsuarioEntity {IdentityId = requestIdentity.Id};
+        //    var usuarioEntity = new UsuarioEntity {IdentityId = requestIdentity.Id};
 
-            if (!usuarioEntity.IsValid())
-                throw new EntityValidationCustomException();
+        //    if (!usuarioEntity.IsValid())
+        //        throw new EntityValidationCustomException();
 
-            var repo = _unitOfWork.GetRepository<UsuarioEntity>();
+        //    var repo = _unitOfWork.GetRepository<UsuarioEntity>();
 
-            repo.Add(usuarioEntity);
-            _unitOfWork.SaveChanges();
+        //    repo.Add(usuarioEntity);
+        //    _unitOfWork.SaveChanges();
 
-            return true;
-        }
+        //    return true;
+        //}
     }
 }

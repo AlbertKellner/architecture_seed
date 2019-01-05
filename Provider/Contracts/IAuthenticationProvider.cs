@@ -6,6 +6,6 @@
     public interface IAuthenticationProvider
     {
         bool AccountRecovery(UsuarioEntity email);
-        Task<bool> RegisterAccount(AppUser appUser, string password);
+        //Task<bool> RegisterAccount(AppUser appUser, string password);
     }
 }
