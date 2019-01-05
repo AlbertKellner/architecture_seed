@@ -3,10 +3,9 @@
     using DataEntity;
     using DataEntity.Model;
     using DataEntity.Model.Relations;
-    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
-    public class OnCareContext : IdentityDbContext<AppUser>
+    public class OnCareContext : DbContext
     {
         public OnCareContext(DbContextOptions options) : base(options)
         {
