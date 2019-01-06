@@ -9,7 +9,7 @@ using Repository;
 
 namespace Repository.Migrations
 {
-    [DbContext(typeof(OnCareContext))]
+    [DbContext(typeof(DatabaseContext))]
     [Migration("20180625202432_InitialCreation")]
     partial class InitialCreation
     {

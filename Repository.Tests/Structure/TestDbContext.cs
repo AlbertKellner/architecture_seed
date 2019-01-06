@@ -3,7 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using Model;
 
-    public class TestDbContext : OnCareContext
+    public class TestDbContext : DatabaseContext
     {
         public TestDbContext(DbContextOptions options) : base(options)
         {

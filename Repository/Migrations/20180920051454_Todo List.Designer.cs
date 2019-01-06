@@ -9,7 +9,7 @@ using Repository;
 
 namespace Repository.Migrations
 {
-    [DbContext(typeof(OnCareContext))]
+    [DbContext(typeof(DatabaseContext))]
     [Migration("20180920051454_Todo List")]
     partial class TodoList
     {

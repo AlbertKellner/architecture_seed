@@ -5,9 +5,9 @@
     using DataEntity.Model.Relations;
     using Microsoft.EntityFrameworkCore;
 
-    public class OnCareContext : DbContext
+    public class DatabaseContext : DbContext
     {
-        public OnCareContext(DbContextOptions options) : base(options)
+        public DatabaseContext(DbContextOptions options) : base(options)
         {
         }
 

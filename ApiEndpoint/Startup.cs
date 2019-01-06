@@ -73,9 +73,9 @@
         private static void ConfigureDependencyInjectionService(IServiceCollection services)
         {
             // Repositories Injection,
-            services.AddScoped<IRepositoryFactory, UnitOfWork<OnCareContext>>();
-            services.AddScoped<IUnitOfWork, UnitOfWork<OnCareContext>>();
-            services.AddScoped<IUnitOfWork<OnCareContext>, UnitOfWork<OnCareContext>>();
+            services.AddScoped<IRepositoryFactory, UnitOfWork<DatabaseContext>>();
+            services.AddScoped<IUnitOfWork, UnitOfWork<DatabaseContext>>();
+            services.AddScoped<IUnitOfWork<DatabaseContext>, UnitOfWork<DatabaseContext>>();
 
             // Services Injection
             services.AddTransient(typeof(IGenericProvider<UsuarioEntity>), typeof(UsuarioProvider));
@@ -93,7 +93,7 @@
             services.AddTransient<IAuthenticationProvider, AuthenticationProvider>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, OnCareContext context)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DatabaseContext context)
         {
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
