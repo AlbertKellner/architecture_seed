@@ -9,8 +9,7 @@
         {
             var builder = new DbContextOptionsBuilder<DatabaseContext>();
 
-            const string connection = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=AspnetTest;Integrated Security=True;Min Pool Size=0;Max Pool Size=500;Connect Timeout=10;Load Balance Timeout=5;Application Name=OnCareApi";
-            //const string connection = @"Data Source=vsrv300;Initial Catalog=OnCare;Persist Security Info=True;User ID=sa;Password=K@lunga!;Min Pool Size=0;Max Pool Size=500;Connect Timeout=15;Application Name=OnCare";
+            const string connection = @"Data Source=NOTEBOOKALBERT\SQLDEVELOPER;Initial Catalog=asd;Integrated Security=True;Connect Timeout=10;Application Name=DotnetSeed";
 
             builder.UseSqlServer(connection);
 
