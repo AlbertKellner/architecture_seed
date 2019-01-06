@@ -1,7 +1,6 @@
 ﻿namespace ApiEndpoint.ViewModels.Request
 {
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     public class TaskListRequestModel : BaseRequestModel
     {
