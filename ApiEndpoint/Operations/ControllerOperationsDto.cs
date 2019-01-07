@@ -74,7 +74,7 @@
             }
 
             var responseModel = _mapper.Map<TEntity, TResponseModel>(responseEntity);
-
+            
             return responseModel == null || responseModel.Id == 0
                 ? BaseResponse.ResponseNotFound((TResponseModel) null)
                 : BaseResponse.ResponseOk(responseModel);
