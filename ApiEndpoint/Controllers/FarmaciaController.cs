@@ -15,16 +15,12 @@
     [Route("api/[controller]")]
     public class FarmaciaController : Controller, IController<FarmaciaRequestModel, FarmaciaResponseModel>
     {
-        private readonly IMapper _mapper;
         private readonly ControllerOperationsDto<FarmaciaDto, FarmaciaEntity, FarmaciaRequestModel, FarmaciaResponseModel> _controllerOperationsDto;
 
-        public FarmaciaController(IGenericProviderDto<FarmaciaDto, FarmaciaEntity> provider, IMapper mapper)
-        {
-            _mapper = mapper;
+        public FarmaciaController(IGenericProviderDto<FarmaciaDto, FarmaciaEntity> provider, IMapper mapper) =>
             _controllerOperationsDto =
                 new ControllerOperationsDto<FarmaciaDto, FarmaciaEntity, FarmaciaRequestModel, FarmaciaResponseModel>(
                     provider, mapper);
-        }
 
         [HttpGet]
         public ApiResponse<List<FarmaciaResponseModel>> GetAll([FromHeader(Name = "UserId")] string headerUserId) => _controllerOperationsDto.GetAll(headerUserId);
