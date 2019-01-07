@@ -17,6 +17,8 @@
 
             CreateMap<UsuarioEntity, UsuarioResponseModel>().EqualityComparison((origin, destiny) => origin.Id == destiny.Id);
 
+            CreateMap<FarmaciaDto, UsuarioResponseModel>().EqualityComparison((origin, destiny) => origin.Id == destiny.Id);
+
             CreateMap<LaboratorioRequestModel, LaboratorioDto>();
             CreateMap<FarmaciaRequestModel, FarmaciaDto>();
             CreateMap<MedicoRequestModel, MedicoDto>();

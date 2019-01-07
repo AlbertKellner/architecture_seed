@@ -6,6 +6,6 @@
     {
         public int Id;
 
-        public T ToDto2<T>(IMapper mapper) => mapper.Map<T>(this);
+        public TDestiny MapTo<TDestiny>(IMapper mapper) => mapper.Map<TDestiny>(this);
     }
 }

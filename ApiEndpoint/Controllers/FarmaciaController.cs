@@ -29,15 +29,21 @@
         [HttpGet]
         public ApiResponse<List<FarmaciaResponseModel>> GetAll([FromHeader(Name = "UserId")] string headerUserId)
         {
-            var test = new FarmaciaRequestModel()
+            var requestModel = new FarmaciaRequestModel()
             {
                 Id = 1,
                 Nome = "teste"
             };
 
-            //var test2 = test.ToDto(_mapper);
-            //var test3 = test.ToDto<FarmaciaDto>(_mapper);
-            var test4 = test.ToDto2<FarmaciaDto>(_mapper);
+            var farmaciaDto = requestModel.MapTo<FarmaciaDto>(_mapper);
+
+            var farmaciaResponseModels = new List<FarmaciaResponseModel>
+            {
+                new FarmaciaResponseModel {Id = 1, Nome = "test"},
+                new FarmaciaResponseModel {Id = 2, Nome = "test 2"},
+            };
+
+            var farmaciaDtos = farmaciaResponseModels.MapTo<FarmaciaResponseModel, List<FarmaciaDto>>(_mapper);
 
             return _controllerOperationsDto.GetAll(headerUserId);
         }
