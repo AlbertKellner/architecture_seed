@@ -23,21 +23,21 @@
                     provider, mapper);
 
         [HttpGet]
-        public ApiResponse<List<FarmaciaResponseModel>> GetAll([FromHeader(Name = "UserId")] string headerUserId) => _controllerOperationsDto.GetAll(headerUserId);
+        public ApiResponse<List<FarmaciaResponseModel>> GetAll() => _controllerOperationsDto.GetAll();
 
         [HttpGet("{id}")]
-        public ApiResponse<FarmaciaResponseModel> Get([FromHeader(Name = "UserId")] string headerUserId, int id) => _controllerOperationsDto.Get(headerUserId, id);
+        public ApiResponse<FarmaciaResponseModel> Get(int id) => _controllerOperationsDto.Get(id);
 
         [HttpPost]
-        public ApiResponse<FarmaciaResponseModel> Insert([FromHeader(Name = "UserId")] string headerUserId, [FromBody] FarmaciaRequestModel requestModel) =>
-            _controllerOperationsDto.Insert(headerUserId, requestModel);
+        public ApiResponse<FarmaciaResponseModel> Insert([FromBody] FarmaciaRequestModel requestModel) =>
+            _controllerOperationsDto.Insert(requestModel);
 
         [HttpPut]
-        public ApiResponse<FarmaciaResponseModel> Update([FromHeader(Name = "UserId")] string headerUserId, [FromBody] FarmaciaRequestModel requestModel) =>
-            _controllerOperationsDto.Update(headerUserId, requestModel);
+        public ApiResponse<FarmaciaResponseModel> Update([FromBody] FarmaciaRequestModel requestModel) =>
+            _controllerOperationsDto.Update(requestModel);
 
         [HttpDelete]
-        public ApiResponse Delete([FromHeader(Name = "UserId")] string headerUserId, [FromBody] FarmaciaRequestModel requestModel) =>
-            _controllerOperationsDto.Delete(headerUserId, requestModel);
+        public ApiResponse Delete([FromBody] FarmaciaRequestModel requestModel) =>
+            _controllerOperationsDto.Delete(requestModel);
     }
 }

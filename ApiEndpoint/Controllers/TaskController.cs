@@ -22,21 +22,21 @@
             _controllerOperationsDto = new ControllerOperationsDto<TaskDto, TaskEntity, TaskRequestModel, TaskResponseModel>(provider, mapper);
 
         [HttpGet]
-        public ApiResponse<List<TaskResponseModel>> GetAll([FromHeader(Name = "UserId")] string headerUserId) => _controllerOperationsDto.GetAll(headerUserId);
+        public ApiResponse<List<TaskResponseModel>> GetAll() => _controllerOperationsDto.GetAll();
 
         [HttpGet("{id}")]
-        public ApiResponse<TaskResponseModel> Get([FromHeader(Name = "UserId")] string headerUserId, int id) => _controllerOperationsDto.Get(headerUserId, id);
+        public ApiResponse<TaskResponseModel> Get(int id) => _controllerOperationsDto.Get(id);
 
         [HttpPost]
-        public ApiResponse<TaskResponseModel> Insert([FromHeader(Name = "UserId")] string headerUserId, [FromBody] TaskRequestModel requestModel) =>
-            _controllerOperationsDto.Insert(headerUserId, requestModel);
+        public ApiResponse<TaskResponseModel> Insert([FromBody] TaskRequestModel requestModel) =>
+            _controllerOperationsDto.Insert(requestModel);
 
         [HttpPut]
-        public ApiResponse<TaskResponseModel> Update([FromHeader(Name = "UserId")] string headerUserId, [FromBody] TaskRequestModel requestModel) =>
-            _controllerOperationsDto.Update(headerUserId, requestModel);
+        public ApiResponse<TaskResponseModel> Update([FromBody] TaskRequestModel requestModel) =>
+            _controllerOperationsDto.Update(requestModel);
 
         [HttpDelete]
-        public ApiResponse Delete([FromHeader(Name = "UserId")] string headerUserId, [FromBody] TaskRequestModel requestModel) =>
-            _controllerOperationsDto.Delete(headerUserId, requestModel);
+        public ApiResponse Delete([FromBody] TaskRequestModel requestModel) =>
+            _controllerOperationsDto.Delete(requestModel);
     }
 }

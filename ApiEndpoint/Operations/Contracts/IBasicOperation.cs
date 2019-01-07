@@ -6,14 +6,14 @@
 
     public interface IBasicOperation<in TRequestModel, TResponseModel> where TRequestModel : new() where TResponseModel : new()
     {
-        ApiResponse<List<TResponseModel>> GetAll([FromHeader(Name = "UserId")] string headerUserId);
+        ApiResponse<List<TResponseModel>> GetAll();
 
-        ApiResponse<TResponseModel> Get([FromHeader(Name = "UserId")] string headerUserId, int id);
+        ApiResponse<TResponseModel> Get(int id);
 
-        ApiResponse<TResponseModel> Insert([FromHeader(Name = "UserId")] string headerUserId, [FromBody] TRequestModel requestModel);
+        ApiResponse<TResponseModel> Insert([FromBody] TRequestModel requestModel);
 
-        ApiResponse<TResponseModel> Update([FromHeader(Name = "UserId")] string headerUserId, [FromBody] TRequestModel requestModel);
+        ApiResponse<TResponseModel> Update([FromBody] TRequestModel requestModel);
 
-        ApiResponse Delete([FromHeader(Name = "UserId")] string headerUserId, [FromBody] TRequestModel requestModel);
+        ApiResponse Delete([FromBody] TRequestModel requestModel);
     }
 }

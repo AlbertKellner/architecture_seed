@@ -22,14 +22,10 @@
             _mapper = mapper;
         }
 
-        public ApiResponse<List<TResponseModel>> GetAll(string headerUserId)
+        public ApiResponse<List<TResponseModel>> GetAll()
         {
             List<TEntity> responseEntities;
-
-            var hasUserId = int.TryParse(headerUserId, out var userId);
-
-            if (!hasUserId)
-                return BaseResponse.ResponseMissingHeader((List<TResponseModel>) null, new Exception(MissingHeaderUserIdError));
+            const int userId = 0;
 
             try
             {
@@ -45,14 +41,10 @@
             return !responseModel.Any() ? BaseResponse.ResponseNotFound((List<TResponseModel>) null) : BaseResponse.ResponseOk(responseModel);
         }
 
-        public ApiResponse<TResponseModel> Get(string headerUserId, int id)
+        public ApiResponse<TResponseModel> Get(int id)
         {
             TEntity responseEntity;
-
-            var hasUserId = int.TryParse(headerUserId, out var userId);
-
-            if (!hasUserId)
-                return BaseResponse.ResponseMissingHeader((TResponseModel) null, new Exception(MissingHeaderUserIdError));
+            const int userId = 0;
 
             try
             {
@@ -68,15 +60,12 @@
             return responseModel == null || responseModel.Id == 0 ? BaseResponse.ResponseNotFound((TResponseModel) null) : BaseResponse.ResponseOk(responseModel);
         }
 
-        public ApiResponse<TResponseModel> Insert(string headerUserId, TRequestModel requestModel)
+        public ApiResponse<TResponseModel> Insert(TRequestModel requestModel)
         {
             var requestEntity = _mapper.Map<TRequestModel, TEntity>(requestModel);
+
             TEntity responseEntity;
-
-            var hasUserId = int.TryParse(headerUserId, out var userId);
-
-            if (!hasUserId)
-                return BaseResponse.ResponseMissingHeader((TResponseModel) null, new Exception(MissingHeaderUserIdError));
+            const int userId = 0;
 
             try
             {
@@ -92,15 +81,12 @@
             return BaseResponse.ResponseCreated(responseModel);
         }
 
-        public ApiResponse<TResponseModel> Update(string headerUserId, TRequestModel requestModel)
+        public ApiResponse<TResponseModel> Update(TRequestModel requestModel)
         {
             var requestEntity = _mapper.Map<TRequestModel, TEntity>(requestModel);
+
             TEntity responseEntity;
-
-            var hasUserId = int.TryParse(headerUserId, out var userId);
-
-            if (!hasUserId)
-                return BaseResponse.ResponseMissingHeader((TResponseModel) null, new Exception(MissingHeaderUserIdError));
+            const int userId = 0;
 
             try
             {
@@ -116,14 +102,11 @@
             return BaseResponse.ResponseOk(responseModel);
         }
 
-        public ApiResponse Delete(string headerUserId, TRequestModel requestModel)
+        public ApiResponse Delete(TRequestModel requestModel)
         {
             var requestEntity = _mapper.Map<TRequestModel, TEntity>(requestModel);
 
-            var hasUserId = int.TryParse(headerUserId, out var userId);
-
-            if (!hasUserId)
-                return BaseResponse.ResponseEntityValidation(new Exception(MissingHeaderUserIdError));
+            const int userId = 0;
 
             try
             {
@@ -137,22 +120,22 @@
             return BaseResponse.ResponseNoContent();
         }
 
-        public ApiResponse<TResponseModel> GetByIdentity(string identityId)
-        {
-            TEntity responseEntity;
+        //public ApiResponse<TResponseModel> GetByIdentity(string identityId)
+        //{
+        //    TEntity responseEntity;
 
-            try
-            {
-                responseEntity = _genericProvider.GetByIdentity(identityId);
-            }
-            catch (Exception exception)
-            {
-                return BaseResponse.ResponseInternalServerError(default(TResponseModel), exception);
-            }
+        //    try
+        //    {
+        //        responseEntity = _genericProvider.GetByIdentity(identityId);
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //        return BaseResponse.ResponseInternalServerError(default(TResponseModel), exception);
+        //    }
 
-            var responseModel = _mapper.Map<TEntity, TResponseModel>(responseEntity);
+        //    var responseModel = _mapper.Map<TEntity, TResponseModel>(responseEntity);
 
-            return responseModel == null || responseModel.Id == 0 ? BaseResponse.ResponseNotFound((TResponseModel) null) : BaseResponse.ResponseOk(responseModel);
-        }
+        //    return responseModel == null || responseModel.Id == 0 ? BaseResponse.ResponseNotFound((TResponseModel) null) : BaseResponse.ResponseOk(responseModel);
+        //}
     }
 }

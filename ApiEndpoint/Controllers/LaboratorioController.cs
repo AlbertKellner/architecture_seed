@@ -21,22 +21,22 @@
             _controllerOperationsDto = new ControllerOperationsDto<LaboratorioDto, LaboratorioEntity, LaboratorioRequestModel, LaboratorioResponseModel>(providerDto, mapper);
 
         [HttpGet]
-        public ApiResponse<List<LaboratorioResponseModel>> GetAll([FromHeader(Name = "UserId")] string headerUserId) => _controllerOperationsDto.GetAll(headerUserId);
+        public ApiResponse<List<LaboratorioResponseModel>> GetAll() => _controllerOperationsDto.GetAll();
 
         [HttpGet("{laboratorioId}")]
-        public ApiResponse<LaboratorioResponseModel> Get([FromHeader(Name = "UserId")] string headerUserId, int laboratorioId) =>
-            _controllerOperationsDto.Get(headerUserId, laboratorioId);
+        public ApiResponse<LaboratorioResponseModel> Get(int laboratorioId) =>
+            _controllerOperationsDto.Get(laboratorioId);
 
         [HttpPost]
-        public ApiResponse<LaboratorioResponseModel> Insert([FromHeader(Name = "UserId")] string headerUserId, [FromBody] LaboratorioRequestModel requestModel) =>
-            _controllerOperationsDto.Insert(headerUserId, requestModel);
+        public ApiResponse<LaboratorioResponseModel> Insert([FromBody] LaboratorioRequestModel requestModel) =>
+            _controllerOperationsDto.Insert(requestModel);
 
         [HttpPut]
-        public ApiResponse<LaboratorioResponseModel> Update([FromHeader(Name = "UserId")] string headerUserId, [FromBody] LaboratorioRequestModel requestModel) =>
-            _controllerOperationsDto.Update(headerUserId, requestModel);
+        public ApiResponse<LaboratorioResponseModel> Update([FromBody] LaboratorioRequestModel requestModel) =>
+            _controllerOperationsDto.Update(requestModel);
 
         [HttpDelete]
-        public ApiResponse Delete([FromHeader(Name = "UserId")] string headerUserId, [FromBody] LaboratorioRequestModel requestModel) =>
-            _controllerOperationsDto.Delete(headerUserId, requestModel);
+        public ApiResponse Delete([FromBody] LaboratorioRequestModel requestModel) =>
+            _controllerOperationsDto.Delete(requestModel);
     }
 }

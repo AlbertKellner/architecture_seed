@@ -21,21 +21,21 @@
             _controllerOperationsDto = new ControllerOperationsDto<MedicoDto, MedicoEntity, MedicoRequestModel, MedicoResponseModel>(provider, mapper);
 
         [HttpGet]
-        public ApiResponse<List<MedicoResponseModel>> GetAll([FromHeader(Name = "UserId")] string headerUserId) => _controllerOperationsDto.GetAll(headerUserId);
+        public ApiResponse<List<MedicoResponseModel>> GetAll() => _controllerOperationsDto.GetAll();
 
         [HttpGet("{id}")]
-        public ApiResponse<MedicoResponseModel> Get([FromHeader(Name = "UserId")] string headerUserId, int id) => _controllerOperationsDto.Get(headerUserId, id);
+        public ApiResponse<MedicoResponseModel> Get(int id) => _controllerOperationsDto.Get(id);
 
         [HttpPost]
-        public ApiResponse<MedicoResponseModel> Insert([FromHeader(Name = "UserId")] string headerUserId, [FromBody] MedicoRequestModel requestModel) =>
-            _controllerOperationsDto.Insert(headerUserId, requestModel);
+        public ApiResponse<MedicoResponseModel> Insert([FromBody] MedicoRequestModel requestModel) =>
+            _controllerOperationsDto.Insert(requestModel);
 
         [HttpPut]
-        public ApiResponse<MedicoResponseModel> Update([FromHeader(Name = "UserId")] string headerUserId, [FromBody] MedicoRequestModel requestModel) =>
-            _controllerOperationsDto.Update(headerUserId, requestModel);
+        public ApiResponse<MedicoResponseModel> Update([FromBody] MedicoRequestModel requestModel) =>
+            _controllerOperationsDto.Update(requestModel);
 
         [HttpDelete]
-        public ApiResponse Delete([FromHeader(Name = "UserId")] string headerUserId, [FromBody] MedicoRequestModel requestModel) =>
-            _controllerOperationsDto.Delete(headerUserId, requestModel);
+        public ApiResponse Delete([FromBody] MedicoRequestModel requestModel) =>
+            _controllerOperationsDto.Delete(requestModel);
     }
 }
