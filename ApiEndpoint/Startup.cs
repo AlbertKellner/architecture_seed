@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ApiEndpoint.ViewModels.Request;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiEndpoint
 {
@@ -103,6 +104,11 @@ namespace ApiEndpoint
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DatabaseContext context)
         {
+            //Mapper.Initialize(cfg =>
+            //{
+            //    cfg.AddProfile<FarmaciaRequestModel>();
+            //});
+
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 

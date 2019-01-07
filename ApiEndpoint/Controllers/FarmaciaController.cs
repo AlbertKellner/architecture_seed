@@ -15,13 +15,32 @@
     [Route("api/[controller]")]
     public class FarmaciaController : Controller, IController<FarmaciaRequestModel, FarmaciaResponseModel>
     {
+        private readonly IMapper _mapper;
         private readonly ControllerOperationsDto<FarmaciaDto, FarmaciaEntity, FarmaciaRequestModel, FarmaciaResponseModel> _controllerOperationsDto;
 
-        public FarmaciaController(IGenericProviderDto<FarmaciaDto, FarmaciaEntity> provider, IMapper mapper) =>
-            _controllerOperationsDto = new ControllerOperationsDto<FarmaciaDto, FarmaciaEntity, FarmaciaRequestModel, FarmaciaResponseModel>(provider, mapper);
+        public FarmaciaController(IGenericProviderDto<FarmaciaDto, FarmaciaEntity> provider, IMapper mapper)
+        {
+            _mapper = mapper;
+            _controllerOperationsDto =
+                new ControllerOperationsDto<FarmaciaDto, FarmaciaEntity, FarmaciaRequestModel, FarmaciaResponseModel>(
+                    provider, mapper);
+        }
 
         [HttpGet]
-        public ApiResponse<List<FarmaciaResponseModel>> GetAll([FromHeader(Name = "UserId")] string headerUserId) => _controllerOperationsDto.GetAll(headerUserId);
+        public ApiResponse<List<FarmaciaResponseModel>> GetAll([FromHeader(Name = "UserId")] string headerUserId)
+        {
+            var test = new FarmaciaRequestModel()
+            {
+                Id = 1,
+                Nome = "teste"
+            };
+
+            //var test2 = test.ToDto(_mapper);
+            //var test3 = test.ToDto<FarmaciaDto>(_mapper);
+            var test4 = test.ToDto2<FarmaciaDto>(_mapper);
+
+            return _controllerOperationsDto.GetAll(headerUserId);
+        }
 
         [HttpGet("{id}")]
         public ApiResponse<FarmaciaResponseModel> Get([FromHeader(Name = "UserId")] string headerUserId, int id) => _controllerOperationsDto.Get(headerUserId, id);
