@@ -1,4 +1,6 @@
-﻿namespace ApiEndpoint
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace ApiEndpoint
 {
     using AutoMapper;
     using DataEntity;
@@ -28,6 +30,8 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
+            ConfigureDatabase(services);
+
             services.AddRouting();
 
             ConfigureDependencyInjectionService(services);
@@ -40,6 +44,10 @@
 
             ConfigureJsonReturnService(services);
         }
+
+        private void ConfigureDatabase(IServiceCollection services) => 
+            services.AddDbContext<DatabaseContext>(options => 
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
         private static void ConfigureJsonReturnService(IServiceCollection services)
             => services.AddMvc(options =>
