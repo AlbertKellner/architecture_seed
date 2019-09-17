@@ -1,9 +1,7 @@
-﻿using ApiEndpoint.ViewModels.Request;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace ApiEndpoint
 {
-    using AutoMapper;
     using DataEntity;
     using DataEntity.Model;
     using DataTransferObject;
@@ -12,10 +10,7 @@ namespace ApiEndpoint
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
-    using NSwag;
-    using NSwag.SwaggerGeneration.Processors.Security;
     using Provider;
     using Provider.Contracts;
     using Repository;
@@ -38,8 +33,6 @@ namespace ApiEndpoint
             ConfigureDependencyInjectionService(services);
 
             services.AddCors();
-
-            services.AddAutoMapper();
 
             ConfigureSwagger(services);
 
@@ -69,14 +62,6 @@ namespace ApiEndpoint
                 c.Title = "Sample API";
                 c.Version = "v1";
                 c.Description = "The sample API documentation description.";
-                c.DocumentProcessors.Add(new SecurityDefinitionAppender("APIKey", new SwaggerSecurityScheme
-                {
-                    Type = SwaggerSecuritySchemeType.ApiKey,
-                    Name = "APIKey",
-                    In = SwaggerSecurityApiKeyLocation.Header,
-                    Description = "APIKey"
-                }));
-                c.OperationProcessors.Add(new OperationSecurityScopeProcessor("APIKey"));
             });
 
         private static void ConfigureDependencyInjectionService(IServiceCollection services)
@@ -102,13 +87,8 @@ namespace ApiEndpoint
             services.AddTransient<IAuthenticationProvider, AuthenticationProvider>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DatabaseContext context)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            //Mapper.Initialize(cfg =>
-            //{
-            //    cfg.AddProfile<FarmaciaRequestModel>();
-            //});
-
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
@@ -116,7 +96,7 @@ namespace ApiEndpoint
 
             app.UseStaticFiles();
 
-            app.UseSwagger();
+            app.UseOpenApi();
             app.UseSwaggerUi3();
 
             app.UseMvc();
