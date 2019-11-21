@@ -17,6 +17,7 @@ namespace ApiEndpoint
     using Repository.Contracts;
     using Repository.Operations;
     using Service;
+    using AutoMapper;
 
     public class Startup
     {
@@ -32,9 +33,13 @@ namespace ApiEndpoint
 
             services.AddControllers();
 
-            ConfigureDependencyInjectionService(services);
+            services.AddAutoMapper(typeof(MappingProfile));
+
+            services.AddHttpContextAccessor();
 
             services.AddCors();
+
+            ConfigureDependencyInjectionService(services);
 
             ConfigureSwagger(services);
 
