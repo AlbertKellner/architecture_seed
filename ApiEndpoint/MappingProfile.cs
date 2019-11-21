@@ -21,11 +21,6 @@
 
             CreateMap<LaboratorioRequestModel, LaboratorioDto>();
             CreateMap<FarmaciaRequestModel, FarmaciaDto>();
-            CreateMap<MedicoRequestModel, MedicoDto>();
-            CreateMap<PacienteRequestModel, PacienteDto>();
-
-            CreateMap<TaskEntity, TaskDto>();
-            CreateMap<TaskListEntity, TaskListDto>();
             
             CreateMap<LaboratorioEntity, LaboratorioResponseModel>();
             CreateMap<FarmaciaEntity, FarmaciaResponseModel>();

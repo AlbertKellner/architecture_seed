@@ -11,7 +11,5 @@
 
         [Column(Order = 1)]
         public int PacienteId { get; set; }
-
-        public PacienteEntity Paciente { get; set; }
     }
 }

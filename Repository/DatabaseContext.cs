@@ -17,11 +17,6 @@
 
         public DbSet<LaboratorioEntity> Laboratorio { get; set; }
         public DbSet<FarmaciaEntity> Farmacia { get; set; }
-        public DbSet<MedicoEntity> Medico { get; set; }
-        public DbSet<PacienteEntity> Paciente { get; set; }
-
-        public DbSet<TaskEntity> Task { get; set; }
-        public DbSet<TaskListEntity> TaskList { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
             optionsBuilder
@@ -40,8 +35,6 @@
             MapRelationFarmaciaMedico(modelBuilder);
 
             MapRelationFarmaciaPaciente(modelBuilder);
-
-            MapRelationMedicoPaciente(modelBuilder);
         }
 
         private static void MapRelationLaboratorioFarmacia(ModelBuilder modelBuilder)
@@ -72,12 +65,6 @@
                 .WithMany(e => e.Medicos)
                 .HasForeignKey(e => e.LaboratorioId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<RelationLaboratorioMedico>()
-                .HasOne(e => e.Medico)
-                .WithMany(e => e.Laboratorios)
-                .HasForeignKey(e => e.MedicoId)
-                .OnDelete(DeleteBehavior.Restrict);
         }
 
         private static void MapRelationFarmaciaMedico(ModelBuilder modelBuilder)
@@ -90,12 +77,6 @@
                 .WithMany(e => e.Medicos)
                 .HasForeignKey(e => e.FarmaciaId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<RelationFarmaciaMedico>()
-                .HasOne(e => e.Medico)
-                .WithMany(e => e.Farmacias)
-                .HasForeignKey(e => e.MedicoId)
-                .OnDelete(DeleteBehavior.Restrict);
         }
 
         private static void MapRelationFarmaciaPaciente(ModelBuilder modelBuilder)
@@ -107,30 +88,6 @@
                 .HasOne(e => e.Farmacia)
                 .WithMany(e => e.Pacientes)
                 .HasForeignKey(e => e.FarmaciaId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<RelationFarmaciaPaciente>()
-                .HasOne(e => e.Paciente)
-                .WithMany(e => e.Farmacias)
-                .HasForeignKey(e => e.PacienteId)
-                .OnDelete(DeleteBehavior.Restrict);
-        }
-
-        private static void MapRelationMedicoPaciente(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<RelationMedicoPaciente>()
-                .HasKey(e => new {e.MedicoId, e.PacienteId});
-
-            modelBuilder.Entity<RelationMedicoPaciente>()
-                .HasOne(e => e.Medico)
-                .WithMany(e => e.Pacientes)
-                .HasForeignKey(e => e.MedicoId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<RelationMedicoPaciente>()
-                .HasOne(e => e.Paciente)
-                .WithMany(e => e.Medicos)
-                .HasForeignKey(e => e.PacienteId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
