@@ -9,6 +9,7 @@
     using Contracts;
     using Contracts.Paging;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
     using Microsoft.EntityFrameworkCore.Query;
 
     public class RepositoryAsync<T> : IRepositoryAsync<T> where T : class
@@ -58,7 +59,7 @@
             return query.ToPaginateAsync(index, size, 0, cancellationToken);
         }
 
-        public Task AddAsync(T entity, CancellationToken cancellationToken = default(CancellationToken)) =>
+        public ValueTask<EntityEntry<T>> AddAsync(T entity, CancellationToken cancellationToken = default(CancellationToken)) =>
             _dbSet.AddAsync(entity, cancellationToken);
 
         public Task AddAsync(params T[] entities) => _dbSet.AddRangeAsync(entities);
@@ -74,6 +75,6 @@
 
         public void UpdateAsync(T entity) => _dbSet.Update(entity);
 
-        public Task AddAsync(T entity) => AddAsync(entity, new CancellationToken());
+        public ValueTask<EntityEntry<T>> AddAsync(T entity) => AddAsync(entity, new CancellationToken());
     }
 }

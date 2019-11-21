@@ -6,6 +6,7 @@
     using System.Linq.Expressions;
     using System.Threading;
     using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
     using Microsoft.EntityFrameworkCore.Query;
     using Paging;
 
@@ -26,7 +27,7 @@
             bool disableTracking = true,
             CancellationToken cancellationToken = default(CancellationToken));
 
-        Task AddAsync(T entity, CancellationToken cancellationToken = default(CancellationToken));
+        ValueTask<EntityEntry<T>> AddAsync(T entity, CancellationToken cancellationToken = default(CancellationToken));
 
         Task AddAsync(params T[] entities);
 

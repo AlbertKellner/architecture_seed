@@ -7,6 +7,7 @@ namespace ApiEndpoint
     using DataTransferObject;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Hosting;
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +19,7 @@ namespace ApiEndpoint
     using Repository.Operations;
     using Service;
 
-    public class Startup
+        public class Startup
     {
         public Startup(IConfiguration configuration) => Configuration = configuration;
 
@@ -30,30 +31,32 @@ namespace ApiEndpoint
 
             services.AddRouting();
 
+            services.AddControllers();
+
             ConfigureDependencyInjectionService(services);
 
             services.AddCors();
 
             ConfigureSwagger(services);
 
-            ConfigureJsonReturnService(services);
+            //ConfigureJsonReturnService(services);
         }
 
         private void ConfigureDatabase(IServiceCollection services) => 
             services.AddDbContext<DatabaseContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-        private static void ConfigureJsonReturnService(IServiceCollection services)
-            => services.AddMvc(options =>
-                               {
-                                   options.OutputFormatters.RemoveType<TextOutputFormatter>();
-                                   options.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>();
-                               })
-                       .AddJsonOptions(options => // Resolves a self referencing loop when converting EF Entities to Json
-                                       {
-                                           options.SerializerSettings.ReferenceLoopHandling =
-                                               ReferenceLoopHandling.Ignore;
-                                       });
+        //private static void ConfigureJsonReturnService(IServiceCollection services)
+        //    => services.AddMvc(options =>
+        //                       {
+        //                           options.OutputFormatters.RemoveType<TextOutputFormatter>();
+        //                           options.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>();
+        //                       })
+        //               .AddJsonOptions(options => // Resolves a self referencing loop when converting EF Entities to Json
+        //                               {
+        //                                   options.SerializerSettings.ReferenceLoopHandling =
+        //                                       ReferenceLoopHandling.Ignore;
+        //                               });
 
         private static IServiceCollection ConfigureSwagger(IServiceCollection services) =>
             services.AddSwaggerDocument(c =>
@@ -87,7 +90,7 @@ namespace ApiEndpoint
             services.AddTransient<IAuthenticationProvider, AuthenticationProvider>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
@@ -97,9 +100,17 @@ namespace ApiEndpoint
             app.UseStaticFiles();
 
             app.UseOpenApi();
+
             app.UseSwaggerUi3();
 
-            app.UseMvc();
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
 
         private static void ConfigureCors(IApplicationBuilder app) => app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
