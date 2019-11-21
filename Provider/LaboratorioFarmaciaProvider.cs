@@ -31,7 +31,7 @@
 
         public IEnumerable<FarmaciaEntity> All(int parentId)
         {
-            var relationLaboratorioFarmacias = _laboratorioRepository.Single(e => e.UsuarioEntityId == userId && e.Id == parentId,
+            var relationLaboratorioFarmacias = _laboratorioRepository.Single(e => e.Id == parentId,
                 include: s => s.Include(e => e.Farmacias).ThenInclude(r => r.Farmacia)).Farmacias;
 
             var farmaciaEntities = new List<FarmaciaEntity>();
@@ -43,7 +43,7 @@
 
         public FarmaciaEntity GetById(int parentId, int childId)
         {
-            var entity = _laboratorioRepository.Single(e => e.UsuarioEntityId == userId && e.Id == parentId,
+            var entity = _laboratorioRepository.Single(e => e.Id == parentId,
                 include: s => s.Include(e => e.Farmacias).ThenInclude(e => e.Farmacia));
 
             if (!entity.Farmacias.Any())
@@ -61,7 +61,7 @@
             if (!entity.IsValid())
                 throw new ValidationException(entity.ValidationErrors.First());
 
-            var laboratorio = _laboratorioRepository.Single(e => e.UsuarioEntityId == userId && e.Id == parentId,
+            var laboratorio = _laboratorioRepository.Single(e => e.Id == parentId,
                 include: s => s.Include(e => e.Farmacias).ThenInclude(r => r.Farmacia));
 
             var isEntityExists = laboratorio.Farmacias.Any(f => f.Farmacia.Nome == entity.Nome);
