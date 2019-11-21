@@ -12,7 +12,6 @@
     public class ControllerOperations<TEntity, TRequestModel, TResponseModel> : IBasicOperation<TRequestModel, TResponseModel>
         where TEntity : new() where TRequestModel : new() where TResponseModel : BaseResponseModel, new()
     {
-        private const string MissingHeaderUserIdError = "Missing header UserId, value must be Integer";
         private readonly IGenericProvider<TEntity> _genericProvider;
         private readonly IMapper _mapper;
 
@@ -119,23 +118,5 @@
 
             return BaseResponse.ResponseNoContent();
         }
-
-        //public ApiResponse<TResponseModel> GetByIdentity(string identityId)
-        //{
-        //    TEntity responseEntity;
-
-        //    try
-        //    {
-        //        responseEntity = _genericProvider.GetByIdentity(identityId);
-        //    }
-        //    catch (Exception exception)
-        //    {
-        //        return BaseResponse.ResponseInternalServerError(default(TResponseModel), exception);
-        //    }
-
-        //    var responseModel = _mapper.Map<TEntity, TResponseModel>(responseEntity);
-
-        //    return responseModel == null || responseModel.Id == 0 ? BaseResponse.ResponseNotFound((TResponseModel) null) : BaseResponse.ResponseOk(responseModel);
-        //}
     }
 }
