@@ -55,7 +55,7 @@
 
             try
             {
-                responseEntity = _genericProviderDto.GetById(userId, id);
+                responseEntity = _genericProviderDto.GetById(id);
             }
             catch (Exception exception)
             {

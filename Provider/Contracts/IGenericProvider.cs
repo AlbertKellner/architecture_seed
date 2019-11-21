@@ -5,7 +5,7 @@
     public interface IGenericProvider<TEntity>
     {
         IEnumerable<TEntity> All(int userId);
-        TEntity GetById(int userId, int id);
+        TEntity GetById(int id);
         TEntity GetByIdentity(string id);
         TEntity Insert(int userId, TEntity entity);
         TEntity Update(int userId, TEntity entity);

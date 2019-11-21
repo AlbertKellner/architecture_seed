@@ -77,9 +77,9 @@ namespace Provider.Tests
                 provider.Insert(userId, entity);
 
             //Act
-            var farmacia1 = provider.GetById(userId, 1);
-            var farmacia2 = provider.GetById(userId, 2);
-            var farmacia3 = provider.GetById(userId, 3);
+            var farmacia1 = provider.GetById(1);
+            var farmacia2 = provider.GetById(2);
+            var farmacia3 = provider.GetById(3);
 
             //Assert
             Assert.Equal("Farmacia 01", farmacia1.Nome);
@@ -102,16 +102,16 @@ namespace Provider.Tests
                                      {
                                          new FarmaciaDto {Nome = "Farmacia 01"},
                                          new FarmaciaDto {Nome = "Farmacia 02"},
-                                         new FarmaciaDto {Nome = "Farmacia 03"}
+                                         //new FarmaciaDto {Nome = "Farmacia 03"}
                                      };
 
             foreach (var entity in repositoryEntities)
                 provider.Insert(userId, entity);
 
             //Act
-            var farmacia1 = provider.GetById(userId, 1);
-            var farmacia2 = provider.GetById(userId, 2);
-            var farmacia3 = provider.GetById(otherUserId, 3);
+            var farmacia1 = provider.GetById(1);
+            var farmacia2 = provider.GetById(2);
+            var farmacia3 = provider.GetById(3);
 
             //Assert
             Assert.Equal("Farmacia 01", farmacia1.Nome);
@@ -182,7 +182,7 @@ namespace Provider.Tests
             var entity = provider.Insert(userId, entityDto);
 
             //Assert
-            var getInsert = provider.GetById(userId, entity.Id);
+            var getInsert = provider.GetById(entity.Id);
             Assert.Equal(entity.Id, getInsert.Id);
             Assert.Equal(entity.Nome, getInsert.Nome);
             Assert.Equal(entity.UsuarioEntityId, getInsert.UsuarioEntityId);
@@ -199,7 +199,7 @@ namespace Provider.Tests
             var updatedActual = provider.Update(userId, entityDto);
 
             //Re-Assert
-            var getUpdate = provider.GetById(userId, updatedActual.Id);
+            var getUpdate = provider.GetById(updatedActual.Id);
             Assert.Equal(updatedActual.Id, getUpdate.Id);
             Assert.Equal(updatedActual.Nome, getUpdate.Nome);
             Assert.Equal(updatedActual.UsuarioEntityId, getUpdate.UsuarioEntityId);

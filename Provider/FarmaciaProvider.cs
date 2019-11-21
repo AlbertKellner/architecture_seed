@@ -27,7 +27,7 @@
 
         public IEnumerable<FarmaciaEntity> All(int userId) => _repository.GetList(e => e.UsuarioEntityId == userId, null, null, 0, disableTracking: true).Items;
 
-        public FarmaciaEntity GetById(int userId, int id) => _repository.Single(e => e.Id == id && e.UsuarioEntityId == userId, disableTracking: true);
+        public FarmaciaEntity GetById(int id) => _repository.Single(e => e.Id == id, disableTracking: true);
 
         public FarmaciaEntity Insert(int userId, FarmaciaDto entityDto)
         {
@@ -52,7 +52,7 @@
 
         public FarmaciaEntity Update(int userId, FarmaciaDto entityDto)
         {
-            var exists = GetById(userId, entityDto.Id)?.Id > 0;
+            var exists = GetById(entityDto.Id)?.Id > 0;
 
             if (!exists)
                 throw new NotFoundCustomException();
@@ -63,7 +63,7 @@
             _repository.Update(entity);
             _unitOfWork.SaveChanges();
 
-            return GetById(userId, entityDto.Id);
+            return GetById(entityDto.Id);
         }
 
         public void Delete(int userId, FarmaciaDto entity)

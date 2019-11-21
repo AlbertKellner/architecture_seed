@@ -25,7 +25,7 @@
 
         public IEnumerable<TaskEntity> All(int userId) => _repository.GetList(e => e.UsuarioEntityId == userId, null, null, 0, disableTracking: true).Items;
 
-        public TaskEntity GetById(int userId, int id) => _repository.Single(e => e.Id == id && e.UsuarioEntityId == userId, disableTracking: true);
+        public TaskEntity GetById(int id) => _repository.Single(e => e.Id == id, disableTracking: true);
 
         public TaskEntity Insert(int userId, TaskDto entityDto)
         {
@@ -50,7 +50,7 @@
 
         public TaskEntity Update(int userId, TaskDto entityDto)
         {
-            var exists = GetById(userId, entityDto.Id)?.Id > 0;
+            var exists = GetById(entityDto.Id)?.Id > 0;
 
             if (!exists)
                 throw new NotFoundCustomException();
@@ -61,7 +61,7 @@
             _repository.Update(entity);
             _unitOfWork.SaveChanges();
 
-            return GetById(userId, entityDto.Id);
+            return GetById(entityDto.Id);
         }
 
         public void Delete(int userId, TaskDto entity)

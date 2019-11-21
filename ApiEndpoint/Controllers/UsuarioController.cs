@@ -4,7 +4,6 @@
     using AutoMapper;
     using Contracts;
     using DataEntity.Model;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Operations;
     using Provider.Contracts;
@@ -17,7 +16,7 @@
     {
         private readonly ControllerOperations<UsuarioEntity, UsuarioRequestModel, UsuarioResponseModel> _controllerOperations;
 
-        public UsuarioController(IGenericProvider<UsuarioEntity> genericProvider, IMapper mapper, IHttpContextAccessor httpContextAccessor) =>
+        public UsuarioController(IGenericProvider<UsuarioEntity> genericProvider, IMapper mapper) =>
             _controllerOperations = new ControllerOperations<UsuarioEntity, UsuarioRequestModel, UsuarioResponseModel>(genericProvider, mapper);
 
         public ApiResponse<List<UsuarioResponseModel>> GetAll() => _controllerOperations.GetAll();

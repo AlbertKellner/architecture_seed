@@ -34,7 +34,7 @@
             _unitOfWork.SaveChanges();
         }
 
-        public MedicoEntity GetById(int userId, int id) => _repository.Single(e => e.Id == id);
+        public MedicoEntity GetById(int id) => _repository.Single(e => e.Id == id);
 
         public MedicoEntity Insert(int userId, MedicoDto entityDto)
         {
@@ -57,7 +57,7 @@
 
         public MedicoEntity Update(int userId, MedicoDto entityDto)
         {
-            var isEntityExists = GetById(userId, entityDto.Id)?.Id > 0;
+            var isEntityExists = GetById(entityDto.Id)?.Id > 0;
 
             if (!isEntityExists)
                 return null;

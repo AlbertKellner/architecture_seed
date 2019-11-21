@@ -43,11 +43,10 @@
         public ApiResponse<TResponseModel> Get(int id)
         {
             TEntity responseEntity;
-            const int userId = 0;
 
             try
             {
-                responseEntity = _genericProvider.GetById(userId, id);
+                responseEntity = _genericProvider.GetById(id);
             }
             catch (Exception exception)
             {

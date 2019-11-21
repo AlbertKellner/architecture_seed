@@ -27,7 +27,7 @@
 
         public IEnumerable<LaboratorioEntity> All(int userId) => _repository.GetList().Items;
 
-        public LaboratorioEntity GetById(int userId, int id) => _repository.Single(e => e.Id == id);
+        public LaboratorioEntity GetById(int id) => _repository.Single(e => e.Id == id);
 
         //public IEnumerable<LaboratorioEntity> All(int userId) => _repository.GetList(
         //    include: s => s.Include(e => e.Farmacias).Include(e => e.Medicos)).Items;
@@ -58,7 +58,7 @@
 
         public LaboratorioEntity Update(int userId, LaboratorioDto entityDto)
         {
-            var isEntityExists = GetById(userId, entityDto.Id)?.Id > 0;
+            var isEntityExists = GetById(entityDto.Id)?.Id > 0;
 
             if (!isEntityExists)
                 return null;

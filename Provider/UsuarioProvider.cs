@@ -19,7 +19,7 @@
 
         public IEnumerable<UsuarioEntity> All(int userId) => _repository.GetList().Items;
 
-        public UsuarioEntity GetById(int userId, int id) => _repository.Single(e => e.Id == id);
+        public UsuarioEntity GetById(int id) => _repository.Single(e => e.Id == id);
 
         public UsuarioEntity GetByIdentity(string id) => _repository.Single(e => e.IdentityId == id);
 
