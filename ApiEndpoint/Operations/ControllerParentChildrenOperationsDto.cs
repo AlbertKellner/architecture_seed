@@ -34,7 +34,7 @@
 
             try
             {
-                responseEntities = (List<TEntity>) _parentChildrenProviderDto.All(userId, parentId);
+                responseEntities = (List<TEntity>) _parentChildrenProviderDto.All(parentId);
             }
             catch (Exception exception)
             {
@@ -57,7 +57,7 @@
 
             try
             {
-                responseEntity = _parentChildrenProviderDto.GetById(userId, parentId, childId);
+                responseEntity = _parentChildrenProviderDto.GetById(parentId, childId);
             }
             catch (Exception exception)
             {
@@ -81,7 +81,7 @@
 
             try
             {
-                responseEntity = _parentChildrenProviderDto.Insert(userId, parentId, requestEntityDto);
+                responseEntity = _parentChildrenProviderDto.Insert(parentId, requestEntityDto);
             }
             catch (Exception exception)
             {
@@ -105,7 +105,7 @@
 
             try
             {
-                responseEntity = _parentChildrenProviderDto.Update(userId, parentId, requestEntityDto);
+                responseEntity = _parentChildrenProviderDto.Update(parentId);
             }
             catch (Exception exception)
             {
@@ -128,7 +128,7 @@
 
             try
             {
-                _parentChildrenProviderDto.Delete(userId, parentId, requestEntityDto);
+                _parentChildrenProviderDto.Delete(parentId, requestEntityDto);
             }
             catch (Exception exception)
             {

@@ -29,7 +29,7 @@
             _mapper = mapper;
         }
 
-        public IEnumerable<FarmaciaEntity> All(int userId, int parentId)
+        public IEnumerable<FarmaciaEntity> All(int parentId)
         {
             var relationLaboratorioFarmacias = _laboratorioRepository.Single(e => e.UsuarioEntityId == userId && e.Id == parentId,
                 include: s => s.Include(e => e.Farmacias).ThenInclude(r => r.Farmacia)).Farmacias;
@@ -41,7 +41,7 @@
             return farmaciaEntities;
         }
 
-        public FarmaciaEntity GetById(int userId, int parentId, int childId)
+        public FarmaciaEntity GetById(int parentId, int childId)
         {
             var entity = _laboratorioRepository.Single(e => e.UsuarioEntityId == userId && e.Id == parentId,
                 include: s => s.Include(e => e.Farmacias).ThenInclude(e => e.Farmacia));
@@ -54,7 +54,7 @@
             return farmacia;
         }
 
-        public FarmaciaEntity Insert(int userId, int parentId, FarmaciaDto entityDto)
+        public FarmaciaEntity Insert(int parentId, FarmaciaDto entityDto)
         {
             var entity = _mapper.Map<FarmaciaDto, FarmaciaEntity>(entityDto);
 
@@ -81,9 +81,9 @@
             return entity;
         }
 
-        public FarmaciaEntity Update(int userId, int parentId, FarmaciaDto entityDto) => throw new NotImplementedException();
+        public FarmaciaEntity Update(int parentId) => throw new NotImplementedException();
 
-        public void Delete(int userId, int parentId, FarmaciaDto entityDto) => throw new NotImplementedException();
+        public void Delete(int parentId, FarmaciaDto entityDto) => throw new NotImplementedException();
 
         //public IEnumerable<LaboratorioEntity> All(int userId) => _laboratorioRepository.GetList(
         //    include: s => s.Include(e => e.Farmacias).Include(e => e.Medicos)).Items;
