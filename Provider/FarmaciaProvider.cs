@@ -25,11 +25,12 @@
             _mapper = mapper;
         }
 
-        public IEnumerable<FarmaciaEntity> All(int userId) => _repository.GetList(e => e.UsuarioEntityId == userId, null, null, 0, disableTracking: true).Items;
+        public IEnumerable<FarmaciaEntity> All() => _repository.GetList().Items;
+        //public IEnumerable<FarmaciaEntity> All() => _repository.GetList(e => e.UsuarioEntityId == userId, null, null, 0, disableTracking: true).Items;
 
         public FarmaciaEntity GetById(int id) => _repository.Single(e => e.Id == id, disableTracking: true);
 
-        public FarmaciaEntity Insert(int userId, FarmaciaDto entityDto)
+        public FarmaciaEntity Insert(FarmaciaDto entityDto)
         {
             var entity = _mapper.Map<FarmaciaDto, FarmaciaEntity>(entityDto);
 
@@ -41,7 +42,7 @@
             if (isEntityExists)
                 throw new AlreadyExistsCustomException();
 
-            entity.UsuarioEntityId = userId;
+            //entity.UsuarioEntityId = userId;
 
             _repository.Add(entity);
             _unitOfWork.SaveChanges();
@@ -50,7 +51,7 @@
             return entity;
         }
 
-        public FarmaciaEntity Update(int userId, FarmaciaDto entityDto)
+        public FarmaciaEntity Update(FarmaciaDto entityDto)
         {
             var exists = GetById(entityDto.Id)?.Id > 0;
 
@@ -58,7 +59,7 @@
                 throw new NotFoundCustomException();
 
             var entity = _mapper.Map<FarmaciaDto, FarmaciaEntity>(entityDto);
-            entity.UsuarioEntityId = userId;
+            //entity.UsuarioEntityId = userId;
 
             _repository.Update(entity);
             _unitOfWork.SaveChanges();
@@ -66,7 +67,7 @@
             return GetById(entityDto.Id);
         }
 
-        public void Delete(int userId, FarmaciaDto entity)
+        public void Delete(FarmaciaDto entity)
         {
             _repository.Delete(entity.Id);
             _unitOfWork.SaveChanges();

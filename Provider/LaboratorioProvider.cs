@@ -25,7 +25,7 @@
             _mapper = mapper;
         }
 
-        public IEnumerable<LaboratorioEntity> All(int userId) => _repository.GetList().Items;
+        public IEnumerable<LaboratorioEntity> All() => _repository.GetList().Items;
 
         public LaboratorioEntity GetById(int id) => _repository.Single(e => e.Id == id);
 
@@ -35,19 +35,19 @@
         //public LaboratorioEntity GetById(int userId, int id) => _repository.Single(e => e.Id == id,
         //    include: s => s.Include(e => e.Farmacias).Include(e => e.Medicos));
 
-        public LaboratorioEntity Insert(int userId, LaboratorioDto entityDto)
+        public LaboratorioEntity Insert(LaboratorioDto entityDto)
         {
             var entity = _mapper.Map<LaboratorioDto, LaboratorioEntity>(entityDto);
 
             if (!entity.IsValid())
                 throw new ValidationException(entity.ValidationErrors.First());
 
-            var isEntityExists = _repository.Single(o => o.Nome == entity.Nome && o.UsuarioEntityId == userId)?.Id > 0;
+            var isEntityExists = _repository.Single(o => o.Nome == entity.Nome)?.Id > 0;
                                      
             if (isEntityExists)
                 throw new AlreadyExistsCustomException();
 
-            entity.UsuarioEntityId = userId;
+            //entity.UsuarioEntityId = userId;
 
             _repository.Add(entity);
             
@@ -56,7 +56,7 @@
             return entity;
         }
 
-        public LaboratorioEntity Update(int userId, LaboratorioDto entityDto)
+        public LaboratorioEntity Update(LaboratorioDto entityDto)
         {
             var isEntityExists = GetById(entityDto.Id)?.Id > 0;
 
@@ -64,7 +64,7 @@
                 return null;
 
             var entity = _mapper.Map<LaboratorioDto, LaboratorioEntity>(entityDto);
-            entity.UsuarioEntityId = userId;
+            //entity.UsuarioEntityId = userId;
 
             _repository.Update(entity);
             _unitOfWork.SaveChanges();
@@ -72,7 +72,7 @@
             return entity;
         }
 
-        public void Delete(int userId, LaboratorioDto entityDto)
+        public void Delete(LaboratorioDto entityDto)
         {
             _repository.Delete(entityDto.Id);
             _unitOfWork.SaveChanges();

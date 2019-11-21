@@ -38,22 +38,22 @@ namespace Provider.Tests
                                      };
 
             foreach (var entity in repositoryEntities)
-                provider.Insert(userId, entity);
-
-            provider.Insert(otherUserId, new FarmaciaDto { Nome = "Farmacia 04" });
+                provider.Insert(entity);
 
             //Act
-            var actual = provider.All(userId);
-
+            var actual = provider.All();
+            
             //Assert
             Assert.Equal("Farmacia 01", actual.First().Nome);
             Assert.Equal("Farmacia 03", actual.Last().Nome);
 
+            provider.Insert(new FarmaciaDto { Nome = "Farmacia 04" });
+
             //Re-Act
-            var actual2 = provider.All(otherUserId);
+            var actual2 = provider.All();
 
             //Re-Assert
-            Assert.Equal("Farmacia 04", actual2.First().Nome);
+            Assert.Equal("Farmacia 04", actual2.Last().Nome);
         }
 
         [Fact]
@@ -74,7 +74,7 @@ namespace Provider.Tests
                                      };
 
             foreach (var entity in repositoryEntities)
-                provider.Insert(userId, entity);
+                provider.Insert(entity);
 
             //Act
             var farmacia1 = provider.GetById(1);
@@ -106,7 +106,7 @@ namespace Provider.Tests
                                      };
 
             foreach (var entity in repositoryEntities)
-                provider.Insert(userId, entity);
+                provider.Insert(entity);
 
             //Act
             var farmacia1 = provider.GetById(1);
@@ -128,15 +128,15 @@ namespace Provider.Tests
 
             //Arrange
             var entityDto = new FarmaciaDto { Nome = "asd" };
-            const int userId = 55;
+            //const int userId = 55;
 
             //Act
-            var actual = provider.Insert(userId, entityDto);
+            var actual = provider.Insert(entityDto);
 
             //Assert
             Assert.Equal(0, entityDto.Id);
             Assert.Equal(1, actual.Id);
-            Assert.Equal(userId, actual.UsuarioEntityId);
+            //Assert.Equal(userId, actual.UsuarioEntityId);
         }
 
         [Fact]
@@ -148,18 +148,18 @@ namespace Provider.Tests
 
             //Arrange
             var entityDto = new FarmaciaDto { Nome = "asd" };
-            const int userId = 55;
+            //const int userId = 55;
 
             //Act
-            var actual = provider.Insert(userId, entityDto);
+            var actual = provider.Insert(entityDto);
 
             //Assert
             Assert.Equal(0, entityDto.Id);
             Assert.Equal(1, actual.Id);
-            Assert.Equal(userId, actual.UsuarioEntityId);
+            //Assert.Equal(userId, actual.UsuarioEntityId);
 
             //Re-Act
-            FarmaciaEntity InsertAgain() => provider.Insert(userId, entityDto);
+            FarmaciaEntity InsertAgain() => provider.Insert(entityDto);
 
             //Assert
             var exception = Assert.Throws<AlreadyExistsCustomException>((Func<FarmaciaEntity>) InsertAgain);
@@ -176,10 +176,10 @@ namespace Provider.Tests
 
             //Arrange
             var entityDto = new FarmaciaDto { Nome = "Farmacia" };
-            const int userId = 55;
+            //const int userId = 55;
 
             //Act
-            var entity = provider.Insert(userId, entityDto);
+            var entity = provider.Insert(entityDto);
 
             //Assert
             var getInsert = provider.GetById(entity.Id);
@@ -189,14 +189,14 @@ namespace Provider.Tests
 
             Assert.NotEqual(0, entity.Id);
             Assert.Equal(entityDto.Nome, entity.Nome);
-            Assert.Equal(userId, entity.UsuarioEntityId);
+            //Assert.Equal(userId, entity.UsuarioEntityId);
 
             //Re-Arrange
             entityDto.Id = entity.Id;
             entityDto.Nome = "Farmacia atualizada";
 
             //Re-Act
-            var updatedActual = provider.Update(userId, entityDto);
+            var updatedActual = provider.Update(entityDto);
 
             //Re-Assert
             var getUpdate = provider.GetById(updatedActual.Id);
@@ -206,7 +206,7 @@ namespace Provider.Tests
 
             Assert.Equal(entity.Id, updatedActual.Id);
             Assert.Equal(entityDto.Nome, updatedActual.Nome);
-            Assert.Equal(userId, updatedActual.UsuarioEntityId);
+            //Assert.Equal(userId, updatedActual.UsuarioEntityId);
         }
 
         [Fact] 
@@ -221,7 +221,7 @@ namespace Provider.Tests
             const int userId = 55;
 
             //Act
-            FarmaciaEntity Update() => provider.Update(userId, updateDto);
+            FarmaciaEntity Update() => provider.Update(updateDto);
             //Assert
             var exception = Assert.Throws<NotFoundCustomException>((Func<FarmaciaEntity>)Update);
 

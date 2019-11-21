@@ -26,9 +26,9 @@
             _mapper = mapper;
         }
 
-        public IEnumerable<PacienteEntity> All(int userId) => _repository.GetList().Items;
+        public IEnumerable<PacienteEntity> All() => _repository.GetList().Items;
 
-        public void Delete(int userId, PacienteDto entityDto)
+        public void Delete(PacienteDto entityDto)
         {
             _repository.Delete(entityDto.Id);
             _unitOfWork.SaveChanges();
@@ -36,26 +36,26 @@
 
         public PacienteEntity GetById(int id) => _repository.Single(e => e.Id == id);
 
-        public PacienteEntity Insert(int userId, PacienteDto entityDto)
+        public PacienteEntity Insert(PacienteDto entityDto)
         {
             var entity = _mapper.Map<PacienteDto, PacienteEntity>(entityDto);
 
             if (!entity.IsValid())
                 throw new ValidationException(entity.ValidationErrors.First());
 
-            var isEntityExists = _repository.Single(o => o.Nome == entity.Nome && o.UsuarioEntityId == userId)?.Id > 0;
+            var isEntityExists = _repository.Single(o => o.Nome == entity.Nome)?.Id > 0;
 
             if (isEntityExists)
                 throw new AlreadyExistsCustomException();
 
-            entity.UsuarioEntityId = userId;
+            //entity.UsuarioEntityId = userId;
 
             _repository.Add(entity);
 
             return entity;
         }
 
-        public PacienteEntity Update(int userId, PacienteDto entityDto)
+        public PacienteEntity Update(PacienteDto entityDto)
         {
             var isEntityExists = GetById(entityDto.Id)?.Id > 0;
 
@@ -63,7 +63,7 @@
                 return null;
 
             var entity = _mapper.Map<PacienteDto, PacienteEntity>(entityDto);
-            entity.UsuarioEntityId = userId;
+            //entity.UsuarioEntityId = userId;
 
             _repository.Update(entity);
             _unitOfWork.SaveChanges();

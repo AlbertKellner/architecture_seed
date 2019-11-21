@@ -26,9 +26,9 @@
             _mapper = mapper;
         }
 
-        public IEnumerable<MedicoEntity> All(int userId) => _repository.GetList().Items;
+        public IEnumerable<MedicoEntity> All() => _repository.GetList().Items;
 
-        public void Delete(int userId, MedicoDto entity)
+        public void Delete(MedicoDto entity)
         {
             _repository.Delete(entity.Id);
             _unitOfWork.SaveChanges();
@@ -36,26 +36,26 @@
 
         public MedicoEntity GetById(int id) => _repository.Single(e => e.Id == id);
 
-        public MedicoEntity Insert(int userId, MedicoDto entityDto)
+        public MedicoEntity Insert(MedicoDto entityDto)
         {
             var entity = _mapper.Map<MedicoDto, MedicoEntity>(entityDto);
 
             if (!entity.IsValid())
                 throw new ValidationException(entity.ValidationErrors.First());
 
-            var isEntityExists = _repository.Single(o => o.Nome == entity.Nome && o.UsuarioEntityId == userId)?.Id > 0;
+            var isEntityExists = _repository.Single(o => o.Nome == entity.Nome)?.Id > 0;
 
             if (isEntityExists)
                 throw new AlreadyExistsCustomException();
 
-            entity.UsuarioEntityId = userId;
+            //entity.UsuarioEntityId = userId;
 
             _repository.Add(entity);
             
             return entity;
         }
 
-        public MedicoEntity Update(int userId, MedicoDto entityDto)
+        public MedicoEntity Update(MedicoDto entityDto)
         {
             var isEntityExists = GetById(entityDto.Id)?.Id > 0;
 
@@ -63,7 +63,7 @@
                 return null;
 
             var entity = _mapper.Map<MedicoDto, MedicoEntity>(entityDto);
-            entity.UsuarioEntityId = userId;
+            //entity.UsuarioEntityId = userId;
 
             _repository.Update(entity);
             _unitOfWork.SaveChanges();

@@ -25,15 +25,12 @@
         public ApiResponse<UsuarioResponseModel> Get(int id) => _controllerOperations.Get(id);
 
         [HttpPost]
-        public ApiResponse<UsuarioResponseModel> Insert([FromBody] UsuarioRequestModel requestModel) =>
-            _controllerOperations.Insert(requestModel);
+        public ApiResponse<UsuarioResponseModel> Insert([FromBody] UsuarioRequestModel requestModel) => _controllerOperations.Insert(requestModel);
 
         [HttpPut]
-        public ApiResponse<UsuarioResponseModel> Update([FromBody] UsuarioRequestModel requestModel) =>
-            _controllerOperations.Update(requestModel);
+        public ApiResponse<UsuarioResponseModel> Update([FromBody] UsuarioRequestModel requestModel) => _controllerOperations.Update(requestModel);
 
         [HttpDelete]
-        public ApiResponse Delete([FromBody] UsuarioRequestModel requestModel) =>
-            _controllerOperations.Delete(requestModel);
+        public ApiResponse Delete([FromBody] UsuarioRequestModel requestModel) => _controllerOperations.Delete(requestModel);
     }
 }

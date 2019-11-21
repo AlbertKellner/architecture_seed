@@ -34,7 +34,7 @@
 
             try
             {
-                responseEntities = (List<TEntity>) _genericProviderDto.All(userId);
+                responseEntities = (List<TEntity>) _genericProviderDto.All();
             }
             catch (Exception exception)
             {
@@ -78,7 +78,7 @@
 
             try
             {
-                responseEntity = _genericProviderDto.Insert(userId, requestEntityDto);
+                responseEntity = _genericProviderDto.Insert(requestEntityDto);
             }
             catch (Exception exception)
             {
@@ -99,7 +99,7 @@
 
             try
             {
-                responseEntity = _genericProviderDto.Update(userId, requestEntityDto);
+                responseEntity = _genericProviderDto.Update(requestEntityDto);
             }
             catch (Exception exception)
             {
@@ -118,7 +118,7 @@
 
             try
             {
-                _genericProviderDto.Delete(userId, requestEntityDto);
+                _genericProviderDto.Delete(requestEntityDto);
             }
             catch (Exception exception)
             {

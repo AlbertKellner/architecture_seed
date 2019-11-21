@@ -17,17 +17,17 @@
             _repository = _unitOfWork.GetRepository<UsuarioEntity>();
         }
 
-        public IEnumerable<UsuarioEntity> All(int userId) => _repository.GetList().Items;
+        public IEnumerable<UsuarioEntity> All() => _repository.GetList().Items;
 
         public UsuarioEntity GetById(int id) => _repository.Single(e => e.Id == id);
 
         public UsuarioEntity GetByIdentity(string id) => _repository.Single(e => e.IdentityId == id);
 
-        public UsuarioEntity Insert(int userId, UsuarioEntity entity) => new UsuarioEntity();
+        public UsuarioEntity Insert(UsuarioEntity entity) => new UsuarioEntity();
 
-        public UsuarioEntity Update(int userId, UsuarioEntity entity) => new UsuarioEntity();
+        public UsuarioEntity Update(UsuarioEntity entity) => new UsuarioEntity();
 
-        public void Delete(int userId, UsuarioEntity entity)
+        public void Delete(UsuarioEntity entity)
         {
             //_repository.Delete(entity.Id);
             //_unitOfWork.SaveChanges();

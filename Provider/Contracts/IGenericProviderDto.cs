@@ -4,10 +4,10 @@
 
     public interface IGenericProviderDto<in TEntityDto, out TEntity>
     {
-        IEnumerable<TEntity> All(int userId);
+        IEnumerable<TEntity> All();
         TEntity GetById(int id);
-        TEntity Insert(int userId, TEntityDto entityDto);
-        TEntity Update(int userId, TEntityDto entityDto);
-        void Delete(int userId, TEntityDto entityDto);
+        TEntity Insert(TEntityDto entityDto);
+        TEntity Update(TEntityDto entityDto);
+        void Delete(TEntityDto entityDto);
     }
 }
