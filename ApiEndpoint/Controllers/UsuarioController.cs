@@ -22,7 +22,7 @@
 
         public ApiResponse<List<UsuarioResponseModel>> GetAll() => _controllerOperations.GetAll();
 
-        [HttpGet("GetById/{id}")]
+        [HttpGet("{id}")]
         public ApiResponse<UsuarioResponseModel> Get(int id) => _controllerOperations.Get(id);
 
         [HttpPost]
