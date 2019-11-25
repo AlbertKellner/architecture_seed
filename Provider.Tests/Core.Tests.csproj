@@ -11,6 +11,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <IsPackable>false</IsPackable>
+    <AssemblyName>Core.Tests</AssemblyName>
+    <RootNamespace>Core.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
