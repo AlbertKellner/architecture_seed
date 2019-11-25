@@ -24,14 +24,9 @@ namespace ApiEndpoint.Operations
             _mapper = mapper;
         }
 
-        public ApiResponse<List<TResponseModel>> GetAll(string headerUserId, int parentId)
+        public ApiResponse<List<TResponseModel>> GetAll(int parentId)
         {
             List<TEntity> responseEntities;
-
-            var hasUserId = int.TryParse(headerUserId, out var userId);
-
-            if (!hasUserId)
-                return BaseResponse.ResponseMissingHeader((List<TResponseModel>) null, new Exception(MissingHeaderUserIdError));
 
             try
             {
@@ -47,14 +42,9 @@ namespace ApiEndpoint.Operations
             return !responseModel.Any() ? BaseResponse.ResponseNotFound((List<TResponseModel>) null) : BaseResponse.ResponseOk(responseModel);
         }
 
-        public ApiResponse<TResponseModel> Get(string headerUserId, int parentId, int childId)
+        public ApiResponse<TResponseModel> Get(int parentId, int childId)
         {
             TEntity responseEntity;
-
-            var hasUserId = int.TryParse(headerUserId, out var userId);
-
-            if (!hasUserId)
-                return BaseResponse.ResponseMissingHeader((TResponseModel) null, new Exception(MissingHeaderUserIdError));
 
             try
             {
@@ -70,15 +60,10 @@ namespace ApiEndpoint.Operations
             return responseModel == null || responseModel.Id == 0 ? BaseResponse.ResponseNotFound((TResponseModel) null) : BaseResponse.ResponseOk(responseModel);
         }
 
-        public ApiResponse<TResponseModel> Insert(string headerUserId, int parentId, TRequestModel requestModel)
+        public ApiResponse<TResponseModel> Insert(int parentId, TRequestModel requestModel)
         {
             var requestEntityDto = _mapper.Map<TRequestModel, TEntityDto>(requestModel);
             TEntity responseEntity;
-
-            var hasUserId = int.TryParse(headerUserId, out var userId);
-
-            if (!hasUserId)
-                return BaseResponse.ResponseMissingHeader((TResponseModel) null, new Exception(MissingHeaderUserIdError));
 
             try
             {
@@ -94,15 +79,10 @@ namespace ApiEndpoint.Operations
             return BaseResponse.ResponseCreated(responseModel);
         }
 
-        public ApiResponse<TResponseModel> Update(string headerUserId, int parentId, TRequestModel requestModel)
+        public ApiResponse<TResponseModel> Update(int parentId, TRequestModel requestModel)
         {
             var requestEntityDto = _mapper.Map<TRequestModel, TEntityDto>(requestModel);
             TEntity responseEntity;
-
-            var hasUserId = int.TryParse(headerUserId, out var userId);
-
-            if (!hasUserId)
-                return BaseResponse.ResponseMissingHeader((TResponseModel) null, new Exception(MissingHeaderUserIdError));
 
             try
             {
@@ -118,14 +98,9 @@ namespace ApiEndpoint.Operations
             return BaseResponse.ResponseOk(responseModel);
         }
 
-        public ApiResponse Delete(string headerUserId, int parentId, TRequestModel requestModel)
+        public ApiResponse Delete(int parentId, TRequestModel requestModel)
         {
             var requestEntityDto = _mapper.Map<TRequestModel, TEntityDto>(requestModel);
-
-            var hasUserId = int.TryParse(headerUserId, out var userId);
-
-            if (!hasUserId)
-                return BaseResponse.ResponseEntityValidation(new Exception(MissingHeaderUserIdError));
 
             try
             {

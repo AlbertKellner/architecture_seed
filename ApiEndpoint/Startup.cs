@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApiEndpoint
 {
-    using DataEntity;
     using DataEntity.Model;
     using DataTransferObject;
     using Microsoft.AspNetCore.Builder;
@@ -16,7 +15,6 @@ namespace ApiEndpoint
     using Repository;
     using Repository.Contracts;
     using Repository.Operations;
-    using Service;
     using AutoMapper;
 
     public class Startup
@@ -87,8 +85,6 @@ namespace ApiEndpoint
             services.AddTransient(typeof(IGenericProviderDto<FarmaciaDto, FarmaciaEntity>), typeof(FarmaciaProvider));
 
             services.AddTransient(typeof(IParentChildrenProviderDto<FarmaciaDto, FarmaciaEntity>), typeof(LaboratorioFarmaciaProvider));
-
-            services.AddTransient<IAuthenticationProvider, AuthenticationProvider>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
