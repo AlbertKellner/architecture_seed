@@ -17,11 +17,11 @@
 //}
 
 
-namespace ApiEndpoint.ViewModels.Response
-{
-    using System;
-    using Newtonsoft.Json;
+using System;
+using Newtonsoft.Json;
 
+namespace ApiEndpoint.Models.Response
+{
     [JsonObject]
     public class ApiResponse<TResponseModel> where TResponseModel : new()
     {

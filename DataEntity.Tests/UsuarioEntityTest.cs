@@ -1,4 +1,4 @@
-namespace Data.Tests
+namespace DataEntity.Tests
 {
     //public class UsuarioEntityTest
     //{

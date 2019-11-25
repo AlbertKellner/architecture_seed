@@ -1,4 +1,7 @@
-﻿namespace ApiEndpoint.Operations
+﻿using ApiEndpoint.Models.Response;
+using Core.Contracts;
+
+namespace ApiEndpoint.Operations
 {
     using System;
     using System.Collections.Generic;
@@ -6,8 +9,6 @@
     using AutoMapper;
     using Contracts;
     using Controllers.Bases;
-    using Provider.Contracts;
-    using ViewModels.Response;
 
     public class ControllerOperations<TEntity, TRequestModel, TResponseModel> : IBasicOperation<TRequestModel, TResponseModel>
         where TEntity : new() where TRequestModel : new() where TResponseModel : BaseResponseModel, new()

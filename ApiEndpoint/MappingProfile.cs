@@ -1,12 +1,13 @@
-﻿namespace ApiEndpoint
+﻿using ApiEndpoint.Models.Request;
+using ApiEndpoint.Models.Response;
+
+namespace ApiEndpoint
 {
     using AutoMapper;
     using AutoMapper.EquivalencyExpression;
     using DataEntity;
     using DataEntity.Model;
     using DataTransferObject;
-    using ViewModels.Request;
-    using ViewModels.Response;
 
     public class MappingProfile : Profile
     {

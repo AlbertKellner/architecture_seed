@@ -1,11 +1,10 @@
-﻿namespace Provider
-{
-    using System.Collections.Generic;
-    using Contracts;
-    using DataEntity.Model;
-    using Microsoft.EntityFrameworkCore;
-    using Repository.Contracts;
+﻿using System.Collections.Generic;
+using Core.Contracts;
+using DataEntity.Model;
+using Repository.Contracts;
 
+namespace Core
+{
     public class UsuarioProvider : IGenericProvider<UsuarioEntity>
     {
         private readonly IRepository<UsuarioEntity> _repository;

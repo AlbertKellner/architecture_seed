@@ -1,7 +1,8 @@
-﻿namespace ApiEndpoint.Controllers.Bases
+﻿using ApiEndpoint.Models.Response;
+
+namespace ApiEndpoint.Controllers.Bases
 {
     using System;
-    using ViewModels.Response;
 
     public static class BaseResponse
     {

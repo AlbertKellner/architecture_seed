@@ -1,4 +1,4 @@
-﻿namespace ApiEndpoint.ViewModels.Request
+﻿namespace ApiEndpoint.Models.Request
 {
     //[Validator(typeof(CredentialsViewModelValidator))]
     public class AccountCredentialsRequestModel

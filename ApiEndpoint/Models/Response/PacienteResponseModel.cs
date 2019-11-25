@@ -1,4 +1,4 @@
-﻿namespace ApiEndpoint.ViewModels.Response
+﻿namespace ApiEndpoint.Models.Response
 {
     public class PacienteResponseModel : BaseResponseModel
     {

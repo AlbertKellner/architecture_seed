@@ -1,7 +1,7 @@
-﻿namespace Provider.Contracts
-{
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
+namespace Core.Contracts
+{
     public interface IGenericProviderDto<in TEntityDto, out TEntity>
     {
         IEnumerable<TEntity> All();

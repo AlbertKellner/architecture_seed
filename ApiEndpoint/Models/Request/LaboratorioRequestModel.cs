@@ -1,4 +1,4 @@
-﻿namespace ApiEndpoint.ViewModels.Request
+﻿namespace ApiEndpoint.Models.Request
 {
     public class LaboratorioRequestModel : BaseRequestModel
     {

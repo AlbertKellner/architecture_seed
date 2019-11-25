@@ -1,8 +1,9 @@
-﻿namespace ApiEndpoint.Controllers.Contracts
+﻿using ApiEndpoint.Models.Response;
+
+namespace ApiEndpoint.Controllers.Contracts
 {
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
-    using ViewModels.Response;
 
     public interface IControllerParentChildren<in TRequestModel, TResponseModel> where TRequestModel : new() where TResponseModel : new()
     {

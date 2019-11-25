@@ -11,9 +11,6 @@ namespace ApiEndpoint.Tests
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Routing;
     using Moq;
-    using Provider.Contracts;
-    using ViewModels.Request;
-    using ViewModels.Response;
     using Xunit;
 
     public class PerfilFisicoControllerTests

@@ -1,18 +1,17 @@
-namespace Provider.Tests
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using AutoMapper;
-    using CustomExceptions;
-    using DataEntity.Model;
-    using DataTransferObject;
-    using DataTransferObjectMapping;
-    using Repository.Operations;
-    using Repository.Tests.Structure;
-    using Xunit;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
+using Core.DataTransferObjectMapping;
+using CustomExceptions;
+using DataEntity.Model;
+using DataTransferObject;
+using Repository.Operations;
+using Repository.Tests.Structure;
+using Xunit;
 
+namespace Core.Tests
+{
     public class FarmaciaProviderTests : IClassFixture<SqlLiteTestFixture>
     {
         public FarmaciaProviderTests(SqlLiteTestFixture fixture) => _fixture = fixture;

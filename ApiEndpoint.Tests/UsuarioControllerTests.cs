@@ -1,3 +1,6 @@
+using ApiEndpoint.Models.Response;
+using Core.Contracts;
+
 namespace ApiEndpoint.Tests
 {
     using AutoMapper;
@@ -6,8 +9,6 @@ namespace ApiEndpoint.Tests
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Moq;
-    using Provider.Contracts;
-    using ViewModels.Response;
     using Xunit;
 
     public class UsuarioControllerTests

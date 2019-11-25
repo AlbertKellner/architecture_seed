@@ -1,10 +1,9 @@
-﻿namespace Provider.DataTransferObjectMapping
-{
-    using AutoMapper;
-    using DataEntity;
-    using DataEntity.Model;
-    using DataTransferObject;
+﻿using AutoMapper;
+using DataEntity.Model;
+using DataTransferObject;
 
+namespace Core.DataTransferObjectMapping
+{
     public class MappingProfile : Profile
     {
         public MappingProfile()

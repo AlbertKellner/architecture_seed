@@ -1,7 +1,6 @@
 ﻿namespace ApiEndpoint.Models.Response
 {
     using System.Collections.Generic;
-    using ApiEndpoint.ViewModels.Response;
 
     public class TaskListResponseModel : BaseResponseModel
     {

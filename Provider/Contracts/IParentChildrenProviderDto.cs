@@ -1,7 +1,7 @@
-﻿namespace Provider.Contracts
-{
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
+namespace Core.Contracts
+{
     public interface IParentChildrenProviderDto<in TEntityDto, out TEntity>
     {
         IEnumerable<TEntity> All(int parentId);

@@ -1,19 +1,18 @@
-﻿namespace Provider
-{
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.Linq;
-    using AutoMapper;
-    using Contracts;
-    using CustomExceptions;
-    using DataEntity.Model;
-    using DataEntity.Model.Relations;
-    using DataTransferObject;
-    using Microsoft.EntityFrameworkCore;
-    using Repository;
-    using Repository.Contracts;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using AutoMapper;
+using Core.Contracts;
+using CustomExceptions;
+using DataEntity.Model;
+using DataEntity.Model.Relations;
+using DataTransferObject;
+using Microsoft.EntityFrameworkCore;
+using Repository.Contracts;
 
+namespace Core
+{
     public class LaboratorioFarmaciaProvider : IParentChildrenProviderDto<FarmaciaDto, FarmaciaEntity>
     {
         private readonly IRepository<LaboratorioEntity> _laboratorioRepository;

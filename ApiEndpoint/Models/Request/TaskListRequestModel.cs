@@ -1,7 +1,7 @@
-﻿namespace ApiEndpoint.ViewModels.Request
-{
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
+namespace ApiEndpoint.Models.Request
+{
     public class TaskListRequestModel : BaseRequestModel
     {
         public string Name { get; set; }

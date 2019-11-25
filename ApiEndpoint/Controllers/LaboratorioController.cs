@@ -1,4 +1,8 @@
-﻿namespace ApiEndpoint.Controllers
+﻿using ApiEndpoint.Models.Request;
+using ApiEndpoint.Models.Response;
+using Core.Contracts;
+
+namespace ApiEndpoint.Controllers
 {
     using System.Collections.Generic;
     using AutoMapper;
@@ -7,9 +11,6 @@
     using DataTransferObject;
     using Microsoft.AspNetCore.Mvc;
     using Operations;
-    using Provider.Contracts;
-    using ViewModels.Request;
-    using ViewModels.Response;
 
     [Produces("application/json")]
     [Route("api/[controller]")]

@@ -1,7 +1,7 @@
-﻿namespace ApiEndpoint.ViewModels.Response
-{
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
+namespace ApiEndpoint.Models.Response
+{
     public class LaboratorioResponseModel : BaseResponseModel
     {
         public string Nome { get; set; }

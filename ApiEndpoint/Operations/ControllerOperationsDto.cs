@@ -1,4 +1,7 @@
-﻿namespace ApiEndpoint.Operations
+﻿using ApiEndpoint.Models.Response;
+using Core.Contracts;
+
+namespace ApiEndpoint.Operations
 {
     using System;
     using System.Collections.Generic;
@@ -7,8 +10,6 @@
     using Contracts;
     using Controllers.Bases;
     using DataTransferObject;
-    using Provider.Contracts;
-    using ViewModels.Response;
 
     public class
         ControllerOperationsDto<TEntityDto, TEntity, TRequestModel, TResponseModel> : IBasicOperation<TRequestModel,

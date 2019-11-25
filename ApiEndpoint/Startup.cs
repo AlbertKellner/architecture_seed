@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Core;
+using Core.Contracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiEndpoint
 {
@@ -11,8 +13,6 @@ namespace ApiEndpoint
     using Microsoft.AspNetCore.Mvc.Formatters;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Provider;
-    using Provider.Contracts;
     using Repository;
     using Repository.Contracts;
     using Repository.Operations;
