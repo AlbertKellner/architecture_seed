@@ -30,7 +30,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataEntity\DataEntity.csproj" />
-    <ProjectReference Include="..\Provider\Provider.csproj" />
+    <ProjectReference Include="..\Provider\Core.csproj" />
     <ProjectReference Include="..\Repository.Tests\Repository.Tests.csproj" />
   </ItemGroup>
 
