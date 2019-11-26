@@ -24,7 +24,7 @@ namespace Core
         }
 
         public IEnumerable<FarmaciaEntity> All() => _repository.GetList().Items;
-        //public IEnumerable<FarmaciaEntity> All() => _repository.GetList(e => e.UsuarioEntityId == userId, null, null, 0, disableTracking: true).Items;
+        //public IEnumerable<FarmaciaEntity> Get() => _repository.GetList(e => e.UsuarioEntityId == userId, null, null, 0, disableTracking: true).Items;
 
         public FarmaciaEntity GetById(int id) => _repository.Single(e => e.Id == id, disableTracking: true);
 

@@ -20,7 +20,7 @@ namespace ApiEndpoint.Controllers
         public UsuarioController(IGenericProvider<UsuarioEntity> genericProvider, IMapper mapper) =>
             _controllerOperations = new ControllerOperations<UsuarioEntity, UsuarioRequestModel, UsuarioResponseModel>(genericProvider, mapper);
 
-        public ApiResponse<List<UsuarioResponseModel>> GetAll() => _controllerOperations.GetAll();
+        public ApiResponse<List<UsuarioResponseModel>> Get() => _controllerOperations.Get();
 
         [HttpGet("{id}")]
         public ApiResponse<UsuarioResponseModel> Get(int id) => _controllerOperations.Get(id);

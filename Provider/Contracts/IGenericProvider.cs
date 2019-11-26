@@ -4,9 +4,8 @@ namespace Core.Contracts
 {
     public interface IGenericProvider<TEntity>
     {
-        IEnumerable<TEntity> All();
-        TEntity GetById(int id);
-        TEntity GetByIdentity(string id);
+        IEnumerable<TEntity> Get();
+        TEntity Get(int id);
         TEntity Insert(TEntity entity);
         TEntity Update(TEntity entity);
         void Delete(TEntity entity);

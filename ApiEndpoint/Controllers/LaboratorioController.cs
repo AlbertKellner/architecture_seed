@@ -22,7 +22,7 @@ namespace ApiEndpoint.Controllers
             _controllerOperationsDto = new ControllerOperationsDto<LaboratorioDto, LaboratorioEntity, LaboratorioRequestModel, LaboratorioResponseModel>(providerDto, mapper);
 
         [HttpGet]
-        public ApiResponse<List<LaboratorioResponseModel>> GetAll() => _controllerOperationsDto.GetAll();
+        public ApiResponse<List<LaboratorioResponseModel>> Get() => _controllerOperationsDto.Get();
 
         [HttpGet("{laboratorioId}")]
         public ApiResponse<LaboratorioResponseModel> Get(int laboratorioId) =>

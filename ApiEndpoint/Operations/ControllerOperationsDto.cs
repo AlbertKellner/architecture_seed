@@ -28,7 +28,7 @@ namespace ApiEndpoint.Operations
             _mapper = mapper;
         }
 
-        public ApiResponse<List<TResponseModel>> GetAll()
+        public ApiResponse<List<TResponseModel>> Get()
         {
             List<TEntity> responseEntities;
             const int userId = 0;

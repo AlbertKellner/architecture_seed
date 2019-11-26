@@ -22,14 +22,13 @@ namespace ApiEndpoint.Operations
             _mapper = mapper;
         }
 
-        public ApiResponse<List<TResponseModel>> GetAll()
+        public ApiResponse<List<TResponseModel>> Get()
         {
             List<TEntity> responseEntities;
-            const int userId = 0;
 
             try
             {
-                responseEntities = (List<TEntity>) _genericProvider.All();
+                responseEntities = (List<TEntity>) _genericProvider.Get();
             }
             catch (Exception exception)
             {
@@ -47,7 +46,7 @@ namespace ApiEndpoint.Operations
 
             try
             {
-                responseEntity = _genericProvider.GetById(id);
+                responseEntity = _genericProvider.Get(id);
             }
             catch (Exception exception)
             {

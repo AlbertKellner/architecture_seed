@@ -27,10 +27,10 @@ namespace Core
 
         public LaboratorioEntity GetById(int id) => _repository.Single(e => e.Id == id);
 
-        //public IEnumerable<LaboratorioEntity> All(int userId) => _repository.GetList(
+        //public IEnumerable<LaboratorioEntity> Get(int userId) => _repository.GetList(
         //    include: s => s.Include(e => e.Farmacias).Include(e => e.Medicos)).Items;
 
-        //public LaboratorioEntity GetById(int userId, int id) => _repository.Single(e => e.Id == id,
+        //public LaboratorioEntity Get(int userId, int id) => _repository.Single(e => e.Id == id,
         //    include: s => s.Include(e => e.Farmacias).Include(e => e.Medicos));
 
         public LaboratorioEntity Insert(LaboratorioDto entityDto)

@@ -84,10 +84,10 @@ namespace Core
 
         public void Delete(int parentId, FarmaciaDto entityDto) => throw new NotImplementedException();
 
-        //public IEnumerable<LaboratorioEntity> All(int userId) => _laboratorioRepository.GetList(
+        //public IEnumerable<LaboratorioEntity> Get(int userId) => _laboratorioRepository.GetList(
         //    include: s => s.Include(e => e.Farmacias).Include(e => e.Medicos)).Items;
 
-        //public LaboratorioEntity GetById(int userId, int id) => _laboratorioRepository.Single(e => e.Id == id,
+        //public LaboratorioEntity Get(int userId, int id) => _laboratorioRepository.Single(e => e.Id == id,
         //    include: s => s.Include(e => e.Farmacias).Include(e => e.Medicos));
 
         //public LaboratorioEntity Insert(int userId, LaboratorioDto entityDto)
@@ -145,7 +145,7 @@ namespace Core
 
         //public LaboratorioEntity Update(int userId, LaboratorioDto entityDto)
         //{
-        //    var isEntityExists = GetById(userId, entityDto.Id)?.Id > 0;
+        //    var isEntityExists = Get(userId, entityDto.Id)?.Id > 0;
 
         //    if (!isEntityExists)
         //        return null;

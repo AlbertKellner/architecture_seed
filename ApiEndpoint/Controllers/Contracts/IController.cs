@@ -7,7 +7,7 @@ namespace ApiEndpoint.Controllers.Contracts
 
     public interface IController<in TRequestModel, TResponseModel> where TRequestModel : new() where TResponseModel : new()
     {
-        ApiResponse<List<TResponseModel>> GetAll();
+        ApiResponse<List<TResponseModel>> Get();
 
         ApiResponse<TResponseModel> Get(int id);
 

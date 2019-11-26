@@ -24,7 +24,7 @@ namespace ApiEndpoint.Controllers
                     provider, mapper);
 
         [HttpGet]
-        public ApiResponse<List<FarmaciaResponseModel>> GetAll() => _controllerOperationsDto.GetAll();
+        public ApiResponse<List<FarmaciaResponseModel>> Get() => _controllerOperationsDto.Get();
 
         [HttpGet("{id}")]
         public ApiResponse<FarmaciaResponseModel> Get(int id) => _controllerOperationsDto.Get(id);

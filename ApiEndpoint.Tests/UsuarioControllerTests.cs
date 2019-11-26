@@ -1,22 +1,23 @@
+using ApiEndpoint.Controllers;
 using ApiEndpoint.Models.Response;
 using Core.Contracts;
+using AutoMapper;
+using DataEntity.Model;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using Xunit;
 
 namespace ApiEndpoint.Tests
 {
-    using AutoMapper;
-    using Controllers;
-    using DataEntity.Model;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using Moq;
-    using Xunit;
+
 
     public class UsuarioControllerTests
     {
         private readonly Mock<IGenericProvider<UsuarioEntity>> _mockProvider = new Mock<IGenericProvider<UsuarioEntity>>();
 
         [Fact]
-        public void TestController2()
+        public void GetById()
         {
             var mappingService = new Mock<IMapper>();
 
@@ -25,9 +26,8 @@ namespace ApiEndpoint.Tests
 
             var usuarioResponseModel = new UsuarioResponseModel { Id = 1 };
 
-            _mockProvider.Setup(x => x.GetById(1)).Returns(usuarioEntity);
+            _mockProvider.Setup(x => x.Get(1)).Returns(usuarioEntity);
 
-            //mappingService.Setup(m => m.Map<UsuarioRequestModel, UsuarioEntity>(It.IsAny<UsuarioRequestModel>())).Returns(entityResponseModel);
             mappingService.Setup(m => m.Map<UsuarioEntity, UsuarioResponseModel>(It.IsAny<UsuarioEntity>())).Returns(usuarioResponseModel);
 
             var controller = new UsuarioController(_mockProvider.Object, mappingService.Object)
@@ -62,7 +62,7 @@ namespace ApiEndpoint.Tests
         //        }
         //    };
 
-        //    _mockProvider.Setup(x => x.GetById(1, 1)).Returns(farmaciaResponseModels);
+        //    _mockProvider.Setup(x => x.Get(1, 1)).Returns(farmaciaResponseModels);
 
         //    mappingService.Setup(m => m.Map<FarmaciaDto, FarmaciaEntity>(It.IsAny<FarmaciaDto>()))
         //        .Returns(farmaciaResponseModels);
@@ -101,7 +101,7 @@ namespace ApiEndpoint.Tests
         //        }
         //    };
 
-        //    _mockProvider.Setup(x => x.All(1)).Returns(farmaciaResponseModels);
+        //    _mockProvider.Setup(x => x.Get(1)).Returns(farmaciaResponseModels);
 
         //    var mockMapper = new Mock<IMapper>();
 
@@ -111,7 +111,7 @@ namespace ApiEndpoint.Tests
         //    controller.ControllerContext.HttpContext.Request.Headers["UserId"] = "1";
 
         //    //Act            
-        //    var actual = controller.GetAll();
+        //    var actual = controller.Get();
 
         //    //Assert
         //    Assert.Equal(apiResponseModel, actual);
