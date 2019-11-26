@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using ApiEndpoint.Controllers;
+using ApiEndpoint.Models.Request;
 using ApiEndpoint.Models.Response;
 using Core.Contracts;
 using AutoMapper;
@@ -10,11 +12,48 @@ using Xunit;
 
 namespace ApiEndpoint.Tests
 {
-
-
     public class UsuarioControllerTests
     {
         private readonly Mock<IGenericProvider<UsuarioEntity>> _mockProvider = new Mock<IGenericProvider<UsuarioEntity>>();
+
+        [Fact]
+        public void GetAll()
+        {
+            var mappingService = new Mock<IMapper>();
+
+            //Arrange
+            var usuarioEntity = new List<UsuarioEntity>
+            {
+                new UsuarioEntity { Id = 1 },
+                new UsuarioEntity { Id = 2 },
+                new UsuarioEntity { Id = 3 }
+            };
+
+            var usuarioResponseModel = new List<UsuarioResponseModel>
+            {
+                new UsuarioResponseModel { Id = 1 },
+                new UsuarioResponseModel { Id = 2 },
+                new UsuarioResponseModel { Id = 3 }
+            };
+
+            _mockProvider.Setup(x => x.Get()).Returns(usuarioEntity);
+
+            mappingService.Setup(m => m.Map<List<UsuarioEntity>, List<UsuarioResponseModel>>(It.IsAny<List<UsuarioEntity>>())).Returns(usuarioResponseModel);
+
+            var controller = new UsuarioController(_mockProvider.Object, mappingService.Object)
+            {
+                ControllerContext = new ControllerContext
+                {
+                    HttpContext = new DefaultHttpContext()
+                }
+            };
+
+            //Act
+            var apiResponse = controller.Get();
+
+            //Assert
+            Assert.Equal(apiResponse.Data[0].Id, usuarioEntity[0].Id);
+        }
 
         [Fact]
         public void GetById()
@@ -45,97 +84,37 @@ namespace ApiEndpoint.Tests
             Assert.Equal(apiResponse.Data.Id, usuarioEntity.Id);
         }
 
-        //[Fact]
-        //public void TestControllerById()
-        //{
-        //    Mock<IMappingService> mappingService = new Mock<IMappingService>();
+        [Fact]
+        public void Insert()
+        {
+            var mappingService = new Mock<IMapper>();
 
-        //    //Arrange
-        //    var farmaciaResponseModels = new FarmaciaEntity
-        //    { Nome = "Farmacia 01" };
+            //Arrange
+            var usuarioEntity = new UsuarioEntity { Id = 1, Nome="teste" };
 
-        //    var apiResponseModel = new ApiResponse<FarmaciaResponseModel>
-        //    {
-        //        Data = new FarmaciaResponseModel
-        //        {
-        //            Nome = "Farmacia 01"
-        //        }
-        //    };
+            var usuarioRequestModel = new UsuarioRequestModel { Id = 1, Nome = "teste" };
 
-        //    _mockProvider.Setup(x => x.Get(1, 1)).Returns(farmaciaResponseModels);
+            var usuarioResponseModel = new UsuarioResponseModel { Id = 1, Nome = "teste" };
+            
 
-        //    mappingService.Setup(m => m.Map<FarmaciaDto, FarmaciaEntity>(It.IsAny<FarmaciaDto>()))
-        //        .Returns(farmaciaResponseModels);
+            _mockProvider.Setup(x => x.Insert(usuarioEntity)).Returns(usuarioEntity);
 
-        //    var mockMapper = new Mock<IMapper>();
+            mappingService.Setup(m => m.Map<UsuarioEntity, UsuarioResponseModel>(It.IsAny<UsuarioEntity>())).Returns(usuarioResponseModel);
 
-        //    var controller = new FarmaciaController(_mockProvider.Object, mappingService.Object);
-        //    controller.ControllerContext = new ControllerContext();
-        //    controller.ControllerContext.HttpContext = new DefaultHttpContext();
-        //    controller.ControllerContext.HttpContext.Request.Headers["UserId"] = "1";
+            var controller = new UsuarioController(_mockProvider.Object, mappingService.Object)
+            {
+                ControllerContext = new ControllerContext
+                {
+                    HttpContext = new DefaultHttpContext()
+                }
+            };
 
-        //    //Act            
-        //    var actual = controller.Get(1);
+            //Act
+            var apiResponse = controller.Insert(usuarioRequestModel);
 
-        //    //Assert
-        //    Assert.Equal(apiResponseModel.Data.Nome, actual.Data.Nome);
-        //    Assert.Equal(apiResponseModel, actual);
-        //}
-
-        //[Fact]
-        //public void TestController()
-        //{
-        //    //Arrange
-        //    var farmaciaResponseModels = new List<FarmaciaEntity>
-        //    {
-        //               new FarmaciaEntity { Nome = "Farmacia 01" },
-        //               new FarmaciaEntity { Nome = "Farmacia 02" }
-        //    };
-
-        //    var apiResponseModel = new ApiResponse<List<FarmaciaResponseModel>>
-        //    {
-        //        Data = new List<FarmaciaResponseModel>
-        //        {
-        //            new FarmaciaResponseModel {Nome = "Farmacia 01"},
-        //            new FarmaciaResponseModel {Nome = "Farmacia 02"}
-        //        }
-        //    };
-
-        //    _mockProvider.Setup(x => x.Get(1)).Returns(farmaciaResponseModels);
-
-        //    var mockMapper = new Mock<IMapper>();
-
-        //    var controller = new FarmaciaController(_mockProvider.Object, mockMapper.Object);
-        //    controller.ControllerContext = new ControllerContext();
-        //    controller.ControllerContext.HttpContext = new DefaultHttpContext();
-        //    controller.ControllerContext.HttpContext.Request.Headers["UserId"] = "1";
-
-        //    //Act            
-        //    var actual = controller.Get();
-
-        //    //Assert
-        //    Assert.Equal(apiResponseModel, actual);
-        //}
-
-        //[Fact]
-        //public void TestController2()
-        //{
-        //    //Arrange
-        //    var entity = new PerfilFisicoEntity
-        //    {
-        //        Id = 1
-        //    };
-
-        //    _mockProvider.Setup(x => x.Insert(entity));
-
-        //    var controller = new PerfilFisicoController(_mockProvider.Object);
-
-        //    //Act            
-        //    controller.Insert(entity);
-
-        //    //Assert
-        //    Assert.Equal(entity, entity);
-        //}
+            //Assert
+            Assert.Equal(apiResponse.Data.Id, usuarioEntity.Id);
+            Assert.Equal(apiResponse.Data.Nome, usuarioEntity.Nome);
+        }
     }
 }
-
