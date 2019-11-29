@@ -28,10 +28,10 @@
 
 //            _repository.Setup(x => x.GetRepository<PerfilFisicoEntity>().Add(entity));
 
-//            var provider = new PerfilFisicoProvider(_repository.Object);
+//            var core = new PerfilFisicoProvider(_repository.Object);
 
 //            //Act
-//            var actual = provider.Insert(entity);
+//            var actual = core.Insert(entity);
 
 //            //Assert
 //            Assert.False(entity.IsValid());
@@ -44,10 +44,10 @@
 //            //Arrange
 //            _repository.Setup(x => x.GetRepository<PerfilFisicoEntity>().Add(_validEntity));
 
-//            var provider = new PerfilFisicoProvider(_repository.Object);
+//            var core = new PerfilFisicoProvider(_repository.Object);
 
 //            //Act
-//            var actual = provider.Insert(_validEntity);
+//            var actual = core.Insert(_validEntity);
 
 //            //Assert
 //            Assert.True(_validEntity.IsValid());

@@ -2,7 +2,7 @@
 
 namespace Core.Contracts
 {
-    public interface IGenericProviderDto<in TEntityDto, out TEntity>
+    public interface IGenericCoreDto<in TEntityDto, out TEntity>
     {
         IEnumerable<TEntity> All();
         TEntity GetById(int id);

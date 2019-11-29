@@ -14,7 +14,7 @@ namespace ApiEndpoint.Tests
 {
     public class UsuarioControllerTests
     {
-        private readonly Mock<IGenericProvider<UsuarioEntity>> _mockProvider = new Mock<IGenericProvider<UsuarioEntity>>();
+        private readonly Mock<IGenericCore<UsuarioEntity>> _mockCore = new Mock<IGenericCore<UsuarioEntity>>();
 
         [Fact]
         public void GetAll()
@@ -36,11 +36,11 @@ namespace ApiEndpoint.Tests
                 new UsuarioResponseModel { Id = 3 }
             };
 
-            _mockProvider.Setup(x => x.Get()).Returns(usuarioEntity);
+            _mockCore.Setup(x => x.Get()).Returns(usuarioEntity);
 
             mappingService.Setup(m => m.Map<List<UsuarioEntity>, List<UsuarioResponseModel>>(It.IsAny<List<UsuarioEntity>>())).Returns(usuarioResponseModel);
 
-            var controller = new UsuarioController(_mockProvider.Object, mappingService.Object)
+            var controller = new UsuarioController(_mockCore.Object, mappingService.Object)
             {
                 ControllerContext = new ControllerContext
                 {
@@ -65,11 +65,11 @@ namespace ApiEndpoint.Tests
 
             var usuarioResponseModel = new UsuarioResponseModel { Id = 1 };
 
-            _mockProvider.Setup(x => x.Get(1)).Returns(usuarioEntity);
+            _mockCore.Setup(x => x.Get(1)).Returns(usuarioEntity);
 
             mappingService.Setup(m => m.Map<UsuarioEntity, UsuarioResponseModel>(It.IsAny<UsuarioEntity>())).Returns(usuarioResponseModel);
 
-            var controller = new UsuarioController(_mockProvider.Object, mappingService.Object)
+            var controller = new UsuarioController(_mockCore.Object, mappingService.Object)
             {
                 ControllerContext = new ControllerContext
                 {
@@ -97,11 +97,11 @@ namespace ApiEndpoint.Tests
             var usuarioResponseModel = new UsuarioResponseModel { Id = 1, Nome = "teste" };
             
 
-            _mockProvider.Setup(x => x.Insert(usuarioEntity)).Returns(usuarioEntity);
+            _mockCore.Setup(x => x.Insert(usuarioEntity)).Returns(usuarioEntity);
 
             mappingService.Setup(m => m.Map<UsuarioEntity, UsuarioResponseModel>(It.IsAny<UsuarioEntity>())).Returns(usuarioResponseModel);
 
-            var controller = new UsuarioController(_mockProvider.Object, mappingService.Object)
+            var controller = new UsuarioController(_mockCore.Object, mappingService.Object)
             {
                 ControllerContext = new ControllerContext
                 {

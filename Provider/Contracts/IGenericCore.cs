@@ -2,7 +2,7 @@
 
 namespace Core.Contracts
 {
-    public interface IGenericProvider<TEntity>
+    public interface IGenericCore<TEntity>
     {
         IEnumerable<TEntity> Get();
         TEntity Get(int id);

@@ -18,10 +18,10 @@ namespace ApiEndpoint.Controllers
     {
         private readonly ControllerOperationsDto<FarmaciaDto, FarmaciaEntity, FarmaciaRequestModel, FarmaciaResponseModel> _controllerOperationsDto;
 
-        public FarmaciaController(IGenericProviderDto<FarmaciaDto, FarmaciaEntity> provider, IMapper mapper) =>
+        public FarmaciaController(IGenericCoreDto<FarmaciaDto, FarmaciaEntity> core, IMapper mapper) =>
             _controllerOperationsDto =
                 new ControllerOperationsDto<FarmaciaDto, FarmaciaEntity, FarmaciaRequestModel, FarmaciaResponseModel>(
-                    provider, mapper);
+                    core, mapper);
 
         [HttpGet]
         public ApiResponse<List<FarmaciaResponseModel>> Get() => _controllerOperationsDto.Get();

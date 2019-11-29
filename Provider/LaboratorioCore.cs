@@ -10,13 +10,13 @@ using Repository.Contracts;
 
 namespace Core
 {
-    public class LaboratorioProvider : IGenericProviderDto<LaboratorioDto, LaboratorioEntity>
+    public class LaboratorioCore : IGenericCoreDto<LaboratorioDto, LaboratorioEntity>
     {
         private readonly IMapper _mapper;
         private readonly IRepository<LaboratorioEntity> _repository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public LaboratorioProvider(IUnitOfWork unitOfWork, IMapper mapper)
+        public LaboratorioCore(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _repository = _unitOfWork.GetRepository<LaboratorioEntity>();

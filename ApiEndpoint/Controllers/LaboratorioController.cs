@@ -18,8 +18,8 @@ namespace ApiEndpoint.Controllers
     {
         private readonly ControllerOperationsDto<LaboratorioDto, LaboratorioEntity, LaboratorioRequestModel, LaboratorioResponseModel> _controllerOperationsDto;
 
-        public LaboratorioController(IGenericProviderDto<LaboratorioDto, LaboratorioEntity> providerDto, IMapper mapper) =>
-            _controllerOperationsDto = new ControllerOperationsDto<LaboratorioDto, LaboratorioEntity, LaboratorioRequestModel, LaboratorioResponseModel>(providerDto, mapper);
+        public LaboratorioController(IGenericCoreDto<LaboratorioDto, LaboratorioEntity> coreDto, IMapper mapper) =>
+            _controllerOperationsDto = new ControllerOperationsDto<LaboratorioDto, LaboratorioEntity, LaboratorioRequestModel, LaboratorioResponseModel>(coreDto, mapper);
 
         [HttpGet]
         public ApiResponse<List<LaboratorioResponseModel>> Get() => _controllerOperationsDto.Get();

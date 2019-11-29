@@ -79,12 +79,12 @@ namespace ApiEndpoint
             services.AddScoped<IUnitOfWork<DatabaseContext>, UnitOfWork<DatabaseContext>>();
 
             // Services Injection
-            services.AddTransient(typeof(IGenericProvider<UsuarioEntity>), typeof(UsuarioProvider));
+            services.AddTransient(typeof(IGenericCore<UsuarioEntity>), typeof(UsuarioCore));
 
-            services.AddTransient(typeof(IGenericProviderDto<LaboratorioDto, LaboratorioEntity>), typeof(LaboratorioProvider));
-            services.AddTransient(typeof(IGenericProviderDto<FarmaciaDto, FarmaciaEntity>), typeof(FarmaciaProvider));
+            services.AddTransient(typeof(IGenericCoreDto<LaboratorioDto, LaboratorioEntity>), typeof(LaboratorioCore));
+            services.AddTransient(typeof(IGenericCoreDto<FarmaciaDto, FarmaciaEntity>), typeof(FarmaciaCore));
 
-            services.AddTransient(typeof(IParentChildrenProviderDto<FarmaciaDto, FarmaciaEntity>), typeof(LaboratorioFarmaciaProvider));
+            services.AddTransient(typeof(IParentChildrenCoreDto<FarmaciaDto, FarmaciaEntity>), typeof(LaboratorioFarmaciaCore));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

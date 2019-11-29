@@ -5,12 +5,12 @@ using Repository.Contracts;
 
 namespace Core
 {
-    public class UsuarioProvider : IGenericProvider<UsuarioEntity>
+    public class UsuarioCore : IGenericCore<UsuarioEntity>
     {
         private readonly IRepository<UsuarioEntity> _repository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public UsuarioProvider(IUnitOfWork unitOfWork)
+        public UsuarioCore(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _repository = _unitOfWork.GetRepository<UsuarioEntity>();

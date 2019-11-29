@@ -13,14 +13,14 @@ using Repository.Contracts;
 
 namespace Core
 {
-    public class LaboratorioFarmaciaProvider : IParentChildrenProviderDto<FarmaciaDto, FarmaciaEntity>
+    public class LaboratorioFarmaciaCore : IParentChildrenCoreDto<FarmaciaDto, FarmaciaEntity>
     {
         private readonly IRepository<LaboratorioEntity> _laboratorioRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<UsuarioEntity> _usuarioRepository;
 
-        public LaboratorioFarmaciaProvider(IUnitOfWork unitOfWork, IMapper mapper)
+        public LaboratorioFarmaciaCore(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _laboratorioRepository = _unitOfWork.GetRepository<LaboratorioEntity>();

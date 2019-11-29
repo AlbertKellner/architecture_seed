@@ -19,12 +19,12 @@ namespace ApiEndpoint.Operations
         where TRequestModel : new()
         where TResponseModel : BaseResponseModel, new()
     {
-        private readonly IGenericProviderDto<TEntityDto, TEntity> _genericProviderDto;
+        private readonly IGenericCoreDto<TEntityDto, TEntity> _genericCoreDto;
         private readonly IMapper _mapper;
 
-        public ControllerOperationsDto(IGenericProviderDto<TEntityDto, TEntity> genericProviderDto, IMapper mapper)
+        public ControllerOperationsDto(IGenericCoreDto<TEntityDto, TEntity> genericCoreDto, IMapper mapper)
         {
-            _genericProviderDto = genericProviderDto;
+            _genericCoreDto = genericCoreDto;
             _mapper = mapper;
         }
 
@@ -35,7 +35,7 @@ namespace ApiEndpoint.Operations
 
             try
             {
-                responseEntities = (List<TEntity>) _genericProviderDto.All();
+                responseEntities = (List<TEntity>) _genericCoreDto.All();
             }
             catch (Exception exception)
             {
@@ -56,7 +56,7 @@ namespace ApiEndpoint.Operations
 
             try
             {
-                responseEntity = _genericProviderDto.GetById(id);
+                responseEntity = _genericCoreDto.GetById(id);
             }
             catch (Exception exception)
             {
@@ -79,7 +79,7 @@ namespace ApiEndpoint.Operations
 
             try
             {
-                responseEntity = _genericProviderDto.Insert(requestEntityDto);
+                responseEntity = _genericCoreDto.Insert(requestEntityDto);
             }
             catch (Exception exception)
             {
@@ -100,7 +100,7 @@ namespace ApiEndpoint.Operations
 
             try
             {
-                responseEntity = _genericProviderDto.Update(requestEntityDto);
+                responseEntity = _genericCoreDto.Update(requestEntityDto);
             }
             catch (Exception exception)
             {
@@ -119,7 +119,7 @@ namespace ApiEndpoint.Operations
 
             try
             {
-                _genericProviderDto.Delete(requestEntityDto);
+                _genericCoreDto.Delete(requestEntityDto);
             }
             catch (Exception exception)
             {

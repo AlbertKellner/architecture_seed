@@ -12,9 +12,9 @@ using Xunit;
 
 namespace Core.Tests
 {
-    public class FarmaciaProviderTests : IClassFixture<SqlLiteTestFixture>
+    public class FarmaciaCoreTests : IClassFixture<SqlLiteTestFixture>
     {
-        public FarmaciaProviderTests(SqlLiteTestFixture fixture) => _fixture = fixture;
+        public FarmaciaCoreTests(SqlLiteTestFixture fixture) => _fixture = fixture;
 
         private readonly SqlLiteTestFixture _fixture;
 
@@ -23,7 +23,7 @@ namespace Core.Tests
         {
             var unitOfWork = new UnitOfWork<TestDbContext>(_fixture.Context);
             var mapper = new MapperConfiguration(cfg => { cfg.AddProfile(new MappingProfile()); }).CreateMapper();
-            var provider = new FarmaciaProvider(unitOfWork, mapper);
+            var core = new FarmaciaCore(unitOfWork, mapper);
 
             //Arrange
             const int userId = 55;
@@ -37,19 +37,19 @@ namespace Core.Tests
                                      };
 
             foreach (var entity in repositoryEntities)
-                provider.Insert(entity);
+                core.Insert(entity);
 
             //Act
-            var actual = provider.All();
+            var actual = core.All();
             
             //Assert
             Assert.Equal("Farmacia 01", actual.First().Nome);
             Assert.Equal("Farmacia 03", actual.Last().Nome);
 
-            provider.Insert(new FarmaciaDto { Nome = "Farmacia 04" });
+            core.Insert(new FarmaciaDto { Nome = "Farmacia 04" });
 
             //Re-Act
-            var actual2 = provider.All();
+            var actual2 = core.All();
 
             //Re-Assert
             Assert.Equal("Farmacia 04", actual2.Last().Nome);
@@ -60,7 +60,7 @@ namespace Core.Tests
         {
             var unitOfWork = new UnitOfWork<TestDbContext>(_fixture.Context);
             var mapper = new MapperConfiguration(cfg => { cfg.AddProfile(new MappingProfile()); }).CreateMapper();
-            var provider = new FarmaciaProvider(unitOfWork, mapper);
+            var core = new FarmaciaCore(unitOfWork, mapper);
 
             //Arrange
             const int userId = 55;
@@ -73,12 +73,12 @@ namespace Core.Tests
                                      };
 
             foreach (var entity in repositoryEntities)
-                provider.Insert(entity);
+                core.Insert(entity);
 
             //Act
-            var farmacia1 = provider.GetById(1);
-            var farmacia2 = provider.GetById(2);
-            var farmacia3 = provider.GetById(3);
+            var farmacia1 = core.GetById(1);
+            var farmacia2 = core.GetById(2);
+            var farmacia3 = core.GetById(3);
 
             //Assert
             Assert.Equal("Farmacia 01", farmacia1.Nome);
@@ -91,7 +91,7 @@ namespace Core.Tests
         {
             var unitOfWork = new UnitOfWork<TestDbContext>(_fixture.Context);
             var mapper = new MapperConfiguration(cfg => { cfg.AddProfile(new MappingProfile()); }).CreateMapper();
-            var provider = new FarmaciaProvider(unitOfWork, mapper);
+            var core = new FarmaciaCore(unitOfWork, mapper);
 
             //Arrange
             const int userId = 55;
@@ -105,12 +105,12 @@ namespace Core.Tests
                                      };
 
             foreach (var entity in repositoryEntities)
-                provider.Insert(entity);
+                core.Insert(entity);
 
             //Act
-            var farmacia1 = provider.GetById(1);
-            var farmacia2 = provider.GetById(2);
-            var farmacia3 = provider.GetById(3);
+            var farmacia1 = core.GetById(1);
+            var farmacia2 = core.GetById(2);
+            var farmacia3 = core.GetById(3);
 
             //Assert
             Assert.Equal("Farmacia 01", farmacia1.Nome);
@@ -123,14 +123,14 @@ namespace Core.Tests
         {
             var unitOfWork = new UnitOfWork<TestDbContext>(_fixture.Context);
             var mapper = new MapperConfiguration(cfg => { cfg.AddProfile(new MappingProfile()); }).CreateMapper();
-            var provider = new FarmaciaProvider(unitOfWork, mapper);
+            var core = new FarmaciaCore(unitOfWork, mapper);
 
             //Arrange
             var entityDto = new FarmaciaDto { Nome = "asd" };
             //const int userId = 55;
 
             //Act
-            var actual = provider.Insert(entityDto);
+            var actual = core.Insert(entityDto);
 
             //Assert
             Assert.Equal(0, entityDto.Id);
@@ -143,14 +143,14 @@ namespace Core.Tests
         {
             var unitOfWork = new UnitOfWork<TestDbContext>(_fixture.Context);
             var mapper = new MapperConfiguration(cfg => { cfg.AddProfile(new MappingProfile()); }).CreateMapper();
-            var provider = new FarmaciaProvider(unitOfWork, mapper);
+            var core = new FarmaciaCore(unitOfWork, mapper);
 
             //Arrange
             var entityDto = new FarmaciaDto { Nome = "asd" };
             //const int userId = 55;
 
             //Act
-            var actual = provider.Insert(entityDto);
+            var actual = core.Insert(entityDto);
 
             //Assert
             Assert.Equal(0, entityDto.Id);
@@ -158,7 +158,7 @@ namespace Core.Tests
             //Assert.Equal(userId, actual.UsuarioEntityId);
 
             //Re-Act
-            FarmaciaEntity InsertAgain() => provider.Insert(entityDto);
+            FarmaciaEntity InsertAgain() => core.Insert(entityDto);
 
             //Assert
             var exception = Assert.Throws<AlreadyExistsCustomException>((Func<FarmaciaEntity>) InsertAgain);
@@ -171,17 +171,17 @@ namespace Core.Tests
         {
             var unitOfWork = new UnitOfWork<TestDbContext>(_fixture.Context);
             var mapper = new MapperConfiguration(cfg => { cfg.AddProfile(new MappingProfile()); }).CreateMapper();
-            var provider = new FarmaciaProvider(unitOfWork, mapper);
+            var core = new FarmaciaCore(unitOfWork, mapper);
 
             //Arrange
             var entityDto = new FarmaciaDto { Nome = "Farmacia" };
             //const int userId = 55;
 
             //Act
-            var entity = provider.Insert(entityDto);
+            var entity = core.Insert(entityDto);
 
             //Assert
-            var getInsert = provider.GetById(entity.Id);
+            var getInsert = core.GetById(entity.Id);
             Assert.Equal(entity.Id, getInsert.Id);
             Assert.Equal(entity.Nome, getInsert.Nome);
             Assert.Equal(entity.UsuarioEntityId, getInsert.UsuarioEntityId);
@@ -195,10 +195,10 @@ namespace Core.Tests
             entityDto.Nome = "Farmacia atualizada";
 
             //Re-Act
-            var updatedActual = provider.Update(entityDto);
+            var updatedActual = core.Update(entityDto);
 
             //Re-Assert
-            var getUpdate = provider.GetById(updatedActual.Id);
+            var getUpdate = core.GetById(updatedActual.Id);
             Assert.Equal(updatedActual.Id, getUpdate.Id);
             Assert.Equal(updatedActual.Nome, getUpdate.Nome);
             Assert.Equal(updatedActual.UsuarioEntityId, getUpdate.UsuarioEntityId);
@@ -213,14 +213,14 @@ namespace Core.Tests
         {
             var unitOfWork = new UnitOfWork<TestDbContext>(_fixture.Context);
             var mapper = new MapperConfiguration(cfg => { cfg.AddProfile(new MappingProfile()); }).CreateMapper();
-            var provider = new FarmaciaProvider(unitOfWork, mapper);
+            var core = new FarmaciaCore(unitOfWork, mapper);
 
             //Arrange
             var updateDto = new FarmaciaDto { Id = 1, Nome = "Farmacia" };
             const int userId = 55;
 
             //Act
-            FarmaciaEntity Update() => provider.Update(updateDto);
+            FarmaciaEntity Update() => core.Update(updateDto);
             //Assert
             var exception = Assert.Throws<NotFoundCustomException>((Func<FarmaciaEntity>)Update);
 

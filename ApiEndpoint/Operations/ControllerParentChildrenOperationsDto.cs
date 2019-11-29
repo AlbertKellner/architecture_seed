@@ -16,11 +16,11 @@ namespace ApiEndpoint.Operations
     {
         private const string MissingHeaderUserIdError = "Missing header UserId, value must be Integer";
         private readonly IMapper _mapper;
-        private readonly IParentChildrenProviderDto<TEntityDto, TEntity> _parentChildrenProviderDto;
+        private readonly IParentChildrenCoreDto<TEntityDto, TEntity> _parentChildrenCoreDto;
 
-        public ControllerParentChildrenOperationsDto(IParentChildrenProviderDto<TEntityDto, TEntity> parentChildrenProviderDto, IMapper mapper)
+        public ControllerParentChildrenOperationsDto(IParentChildrenCoreDto<TEntityDto, TEntity> parentChildrenCoreDto, IMapper mapper)
         {
-            _parentChildrenProviderDto = parentChildrenProviderDto;
+            _parentChildrenCoreDto = parentChildrenCoreDto;
             _mapper = mapper;
         }
 
@@ -30,7 +30,7 @@ namespace ApiEndpoint.Operations
 
             try
             {
-                responseEntities = (List<TEntity>) _parentChildrenProviderDto.All(parentId);
+                responseEntities = (List<TEntity>) _parentChildrenCoreDto.All(parentId);
             }
             catch (Exception exception)
             {
@@ -48,7 +48,7 @@ namespace ApiEndpoint.Operations
 
             try
             {
-                responseEntity = _parentChildrenProviderDto.GetById(parentId, childId);
+                responseEntity = _parentChildrenCoreDto.GetById(parentId, childId);
             }
             catch (Exception exception)
             {
@@ -67,7 +67,7 @@ namespace ApiEndpoint.Operations
 
             try
             {
-                responseEntity = _parentChildrenProviderDto.Insert(parentId, requestEntityDto);
+                responseEntity = _parentChildrenCoreDto.Insert(parentId, requestEntityDto);
             }
             catch (Exception exception)
             {
@@ -86,7 +86,7 @@ namespace ApiEndpoint.Operations
 
             try
             {
-                responseEntity = _parentChildrenProviderDto.Update(parentId);
+                responseEntity = _parentChildrenCoreDto.Update(parentId);
             }
             catch (Exception exception)
             {
@@ -104,7 +104,7 @@ namespace ApiEndpoint.Operations
 
             try
             {
-                _parentChildrenProviderDto.Delete(parentId, requestEntityDto);
+                _parentChildrenCoreDto.Delete(parentId, requestEntityDto);
             }
             catch (Exception exception)
             {

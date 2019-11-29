@@ -17,8 +17,8 @@ namespace ApiEndpoint.Controllers
     {
         private readonly ControllerOperations<UsuarioEntity, UsuarioRequestModel, UsuarioResponseModel> _controllerOperations;
 
-        public UsuarioController(IGenericProvider<UsuarioEntity> genericProvider, IMapper mapper) =>
-            _controllerOperations = new ControllerOperations<UsuarioEntity, UsuarioRequestModel, UsuarioResponseModel>(genericProvider, mapper);
+        public UsuarioController(IGenericCore<UsuarioEntity> genericCore, IMapper mapper) =>
+            _controllerOperations = new ControllerOperations<UsuarioEntity, UsuarioRequestModel, UsuarioResponseModel>(genericCore, mapper);
 
         public ApiResponse<List<UsuarioResponseModel>> Get() => _controllerOperations.Get();
 

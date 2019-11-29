@@ -13,12 +13,12 @@ namespace ApiEndpoint.Operations
     public class ControllerOperations<TEntity, TRequestModel, TResponseModel> : IBasicOperation<TRequestModel, TResponseModel>
         where TEntity : new() where TRequestModel : new() where TResponseModel : BaseResponseModel, new()
     {
-        private readonly IGenericProvider<TEntity> _genericProvider;
+        private readonly IGenericCore<TEntity> _genericCore;
         private readonly IMapper _mapper;
 
-        public ControllerOperations(IGenericProvider<TEntity> genericProvider, IMapper mapper)
+        public ControllerOperations(IGenericCore<TEntity> genericCore, IMapper mapper)
         {
-            _genericProvider = genericProvider;
+            _genericCore = genericCore;
             _mapper = mapper;
         }
 
@@ -28,7 +28,7 @@ namespace ApiEndpoint.Operations
 
             try
             {
-                responseEntities = (List<TEntity>) _genericProvider.Get();
+                responseEntities = (List<TEntity>) _genericCore.Get();
             }
             catch (Exception exception)
             {
@@ -46,7 +46,7 @@ namespace ApiEndpoint.Operations
 
             try
             {
-                responseEntity = _genericProvider.Get(id);
+                responseEntity = _genericCore.Get(id);
             }
             catch (Exception exception)
             {
@@ -67,7 +67,7 @@ namespace ApiEndpoint.Operations
 
             try
             {
-                responseEntity = _genericProvider.Insert(requestEntity);
+                responseEntity = _genericCore.Insert(requestEntity);
             }
             catch (Exception exception)
             {
@@ -88,7 +88,7 @@ namespace ApiEndpoint.Operations
 
             try
             {
-                responseEntity = _genericProvider.Update(requestEntity);
+                responseEntity = _genericCore.Update(requestEntity);
             }
             catch (Exception exception)
             {
@@ -108,7 +108,7 @@ namespace ApiEndpoint.Operations
 
             try
             {
-                _genericProvider.Delete(requestEntity);
+                _genericCore.Delete(requestEntity);
             }
             catch (Exception exception)
             {

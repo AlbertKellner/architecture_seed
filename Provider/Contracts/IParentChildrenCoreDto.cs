@@ -2,7 +2,7 @@
 
 namespace Core.Contracts
 {
-    public interface IParentChildrenProviderDto<in TEntityDto, out TEntity>
+    public interface IParentChildrenCoreDto<in TEntityDto, out TEntity>
     {
         IEnumerable<TEntity> All(int parentId);
         TEntity GetById(int parentId, int childId);
