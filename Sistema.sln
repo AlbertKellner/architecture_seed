@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Re
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiEndpoint", "ApiEndpoint\ApiEndpoint.csproj", "{CF06009F-D9C3-475C-ABCD-0726393E68DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Provider\Core.csproj", "{9613710F-CBC6-4D27-9CA8-5A56F2C3C3FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{9613710F-CBC6-4D27-9CA8-5A56F2C3C3FA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataEntity", "DataEntity\DataEntity.csproj", "{CDA5066F-D9B6-42B1-AD17-C9101EF0AE51}"
 EndProject
@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnityTests", "UnityTests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiEndpoint.Tests", "ApiEndpoint.Tests\ApiEndpoint.Tests.csproj", "{61685D5B-BC9F-4B8E-9A20-E77401B08020}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Tests", "Provider.Tests\Core.Tests.csproj", "{1CFB18CA-BBCE-460B-A3C5-1D7DB16A685B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Tests", "Core.Tests\Core.Tests.csproj", "{1CFB18CA-BBCE-460B-A3C5-1D7DB16A685B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository.Tests", "Repository.Tests\Repository.Tests.csproj", "{358D1A47-A0E5-450B-B5C0-DE7D2731A53C}"
 EndProject
