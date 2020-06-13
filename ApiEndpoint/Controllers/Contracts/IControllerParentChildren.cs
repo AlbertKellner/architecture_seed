@@ -1,4 +1,5 @@
-﻿using ApiEndpoint.Models.Response;
+﻿using System.Threading.Tasks;
+using ApiEndpoint.Models.Response;
 
 namespace ApiEndpoint.Controllers.Contracts
 {
@@ -7,14 +8,10 @@ namespace ApiEndpoint.Controllers.Contracts
 
     public interface IControllerParentChildren<in TRequestModel, TResponseModel> where TRequestModel : new() where TResponseModel : new()
     {
-        ApiResponse<List<TResponseModel>> GetAll(int parentId);
-
-        ApiResponse<TResponseModel> Get(int parentId, int childId);
-
-        ApiResponse<TResponseModel> Insert(int parentId, [FromBody] TRequestModel requestModel);
-
-        ApiResponse<TResponseModel> Update(int parentId, [FromBody] TRequestModel requestModel);
-
-        ApiResponse Delete(int parentId, [FromBody] TRequestModel requestModel);
+        Task<ApiResponse<List<TResponseModel>>> GetAll(int parentId);
+        Task<ApiResponse<TResponseModel>> Get(int parentId, int childId);
+        Task<ApiResponse<TResponseModel>> Insert(int parentId, [FromBody] TRequestModel requestModel);
+        Task<ApiResponse<TResponseModel>> Update(int parentId, [FromBody] TRequestModel requestModel);
+        Task<ApiResponse> Delete(int parentId, [FromBody] TRequestModel requestModel);
     }
 }

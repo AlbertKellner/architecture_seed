@@ -1,4 +1,5 @@
-﻿using ApiEndpoint.Models.Request;
+﻿using System.Threading.Tasks;
+using ApiEndpoint.Models.Request;
 using ApiEndpoint.Models.Response;
 using Core.Contracts;
 
@@ -22,20 +23,20 @@ namespace ApiEndpoint.Controllers
                 new ControllerParentChildrenOperationsDto<FarmaciaDto, FarmaciaEntity, FarmaciaRequestModel, FarmaciaResponseModel>(coreDto, mapper);
 
         [HttpGet("{laboratorioId}/Farmacia")]
-        public ApiResponse<List<FarmaciaResponseModel>> GetAll(int laboratorioId) => _controllerParentChildrenOperationsDto.GetAll(laboratorioId);
+        public async Task<ApiResponse<List<FarmaciaResponseModel>>> GetAll(int laboratorioId) => await _controllerParentChildrenOperationsDto.GetAllAsync(laboratorioId);
 
         [HttpGet("{laboratorioId}/Farmacia/{farmaciaId}")]
-        public ApiResponse<FarmaciaResponseModel> Get(int laboratorioId, int farmaciaId) => _controllerParentChildrenOperationsDto.Get(laboratorioId, farmaciaId);
+        public async Task<ApiResponse<FarmaciaResponseModel>> Get(int laboratorioId, int farmaciaId) => await _controllerParentChildrenOperationsDto.GetAsync(laboratorioId, farmaciaId);
 
         [HttpPost("{laboratorioId}/Farmacia")]
-        public ApiResponse<FarmaciaResponseModel> Insert(int laboratorioId, [FromBody] FarmaciaRequestModel requestModel) =>
-            _controllerParentChildrenOperationsDto.Insert(laboratorioId, requestModel);
+        public async Task<ApiResponse<FarmaciaResponseModel>> Insert(int laboratorioId, [FromBody] FarmaciaRequestModel requestModel) =>
+            await _controllerParentChildrenOperationsDto.InsertAsync(laboratorioId, requestModel);
 
         [HttpPut("{laboratorioId}/Farmacia")]
-        public ApiResponse<FarmaciaResponseModel> Update(int laboratorioId, [FromBody] FarmaciaRequestModel requestModel) =>
-            _controllerParentChildrenOperationsDto.Update(laboratorioId, requestModel);
+        public async Task<ApiResponse<FarmaciaResponseModel>> Update(int laboratorioId, [FromBody] FarmaciaRequestModel requestModel) =>
+            await _controllerParentChildrenOperationsDto.UpdateAsync(laboratorioId, requestModel);
 
         [HttpDelete("{laboratorioId}/Farmacia")]
-        public ApiResponse Delete(int laboratorioId, [FromBody] FarmaciaRequestModel requestModel) => _controllerParentChildrenOperationsDto.Delete(laboratorioId, requestModel);
+        public async Task<ApiResponse> Delete(int laboratorioId, [FromBody] FarmaciaRequestModel requestModel) => await _controllerParentChildrenOperationsDto.DeleteAsync(laboratorioId, requestModel);
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Core.Contracts;
 using CustomExceptions;
@@ -15,7 +16,7 @@ namespace Core
 {
     public class LaboratorioFarmaciaCore : IParentChildrenCoreDto<FarmaciaDto, FarmaciaEntity>
     {
-        private readonly IRepository<LaboratorioEntity> _laboratorioRepository;
+        private readonly IRepositoryAsync<LaboratorioEntity> _laboratorioRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<UsuarioEntity> _usuarioRepository;
@@ -23,15 +24,22 @@ namespace Core
         public LaboratorioFarmaciaCore(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
-            _laboratorioRepository = _unitOfWork.GetRepository<LaboratorioEntity>();
+            _laboratorioRepository = _unitOfWork.GetRepositoryAsync<LaboratorioEntity>();
             _usuarioRepository = _unitOfWork.GetRepository<UsuarioEntity>();
             _mapper = mapper;
         }
 
-        public IEnumerable<FarmaciaEntity> All(int parentId)
+        public async Task<IEnumerable<FarmaciaEntity>> AllAsync(int parentId)
         {
-            var relationLaboratorioFarmacias = _laboratorioRepository.Single(e => e.Id == parentId,
-                include: s => s.Include(e => e.Farmacias).ThenInclude(r => r.Farmacia)).Farmacias;
+            var relationLaboratorioFarmacias = (
+                await _laboratorioRepository.SingleAsync(e 
+                        => e.Id == parentId, include: s 
+                            => s.Include(e 
+                                => e.Farmacias)
+                            .ThenInclude(r 
+                                => r.Farmacia)
+                            )
+                ).Farmacias;
 
             var farmaciaEntities = new List<FarmaciaEntity>();
             foreach (var laboratorioFarmacia in relationLaboratorioFarmacias)
@@ -40,10 +48,15 @@ namespace Core
             return farmaciaEntities;
         }
 
-        public FarmaciaEntity GetById(int parentId, int childId)
+        public async Task<FarmaciaEntity> GetByIdAsync(int parentId, int childId)
         {
-            var entity = _laboratorioRepository.Single(e => e.Id == parentId,
-                include: s => s.Include(e => e.Farmacias).ThenInclude(e => e.Farmacia));
+            var entity = await _laboratorioRepository.SingleAsync(e 
+                                    => e.Id == parentId, include: s 
+                                        => s.Include(e 
+                                            => e.Farmacias)
+                                        .ThenInclude(e 
+                                            => e.Farmacia)
+                                        );
 
             if (!entity.Farmacias.Any())
                 return null;
@@ -53,15 +66,20 @@ namespace Core
             return farmacia;
         }
 
-        public FarmaciaEntity Insert(int parentId, FarmaciaDto entityDto)
+        public async Task<FarmaciaEntity> InsertAsync(int parentId, FarmaciaDto entityDto)
         {
             var entity = _mapper.Map<FarmaciaDto, FarmaciaEntity>(entityDto);
 
             if (!entity.IsValid())
                 throw new ValidationException(entity.ValidationErrors.First());
 
-            var laboratorio = _laboratorioRepository.Single(e => e.Id == parentId,
-                include: s => s.Include(e => e.Farmacias).ThenInclude(r => r.Farmacia));
+            var laboratorio = await _laboratorioRepository.SingleAsync(e 
+                                        => e.Id == parentId, include: s 
+                                            => s.Include(e 
+                                                => e.Farmacias)
+                                            .ThenInclude(r 
+                                                => r.Farmacia)
+                                            );
 
             var isEntityExists = laboratorio.Farmacias.Any(f => f.Farmacia.Nome == entity.Nome);
 
@@ -80,14 +98,14 @@ namespace Core
             return entity;
         }
 
-        public FarmaciaEntity Update(int parentId) => throw new NotImplementedException();
+        public Task<FarmaciaEntity> UpdateAsync(int parentId) => throw new NotImplementedException();
 
-        public void Delete(int parentId, FarmaciaDto entityDto) => throw new NotImplementedException();
+        public Task DeleteAsync(int parentId, FarmaciaDto entityDto) => throw new NotImplementedException();
 
-        //public IEnumerable<LaboratorioEntity> Get(int userId) => _laboratorioRepository.GetList(
+        //public IEnumerable<LaboratorioEntity> GetAsync(int userId) => _laboratorioRepository.GetList(
         //    include: s => s.Include(e => e.Farmacias).Include(e => e.Medicos)).Items;
 
-        //public LaboratorioEntity Get(int userId, int id) => _laboratorioRepository.Single(e => e.Id == id,
+        //public LaboratorioEntity GetAsync(int userId, int id) => _laboratorioRepository.Single(e => e.Id == id,
         //    include: s => s.Include(e => e.Farmacias).Include(e => e.Medicos));
 
         //public LaboratorioEntity Insert(int userId, LaboratorioDto entityDto)
@@ -145,7 +163,7 @@ namespace Core
 
         //public LaboratorioEntity Update(int userId, LaboratorioDto entityDto)
         //{
-        //    var isEntityExists = Get(userId, entityDto.Id)?.Id > 0;
+        //    var isEntityExists = GetAsync(userId, entityDto.Id)?.Id > 0;
 
         //    if (!isEntityExists)
         //        return null;

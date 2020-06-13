@@ -1,4 +1,5 @@
-﻿using ApiEndpoint.Models.Request;
+﻿using System.Threading.Tasks;
+using ApiEndpoint.Models.Request;
 using ApiEndpoint.Models.Response;
 using Core.Contracts;
 
@@ -24,21 +25,21 @@ namespace ApiEndpoint.Controllers
                     core, mapper);
 
         [HttpGet]
-        public ApiResponse<List<FarmaciaResponseModel>> Get() => _controllerOperationsDto.Get();
+        public async Task<ApiResponse<List<FarmaciaResponseModel>>> Get() => await _controllerOperationsDto.GetAsync();
 
         [HttpGet("{id}")]
-        public ApiResponse<FarmaciaResponseModel> Get(int id) => _controllerOperationsDto.Get(id);
+        public async Task<ApiResponse<FarmaciaResponseModel>> Get(int id) => await _controllerOperationsDto.GetAsync(id);
 
         [HttpPost]
-        public ApiResponse<FarmaciaResponseModel> Insert([FromBody] FarmaciaRequestModel requestModel) =>
-            _controllerOperationsDto.Insert(requestModel);
+        public async Task<ApiResponse<FarmaciaResponseModel>> Insert([FromBody] FarmaciaRequestModel requestModel) =>
+            await _controllerOperationsDto.InsertAsync(requestModel);
 
         [HttpPut]
-        public ApiResponse<FarmaciaResponseModel> Update([FromBody] FarmaciaRequestModel requestModel) =>
-            _controllerOperationsDto.Update(requestModel);
+        public async Task<ApiResponse<FarmaciaResponseModel>> Update([FromBody] FarmaciaRequestModel requestModel) =>
+            await _controllerOperationsDto.UpdateAsync(requestModel);
 
         [HttpDelete]
-        public ApiResponse Delete([FromBody] FarmaciaRequestModel requestModel) =>
-            _controllerOperationsDto.Delete(requestModel);
+        public async Task<ApiResponse> Delete([FromBody] FarmaciaRequestModel requestModel) =>
+            await _controllerOperationsDto.DeleteAsync(requestModel);
     }
 }

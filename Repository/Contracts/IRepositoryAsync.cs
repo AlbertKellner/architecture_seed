@@ -33,6 +33,6 @@
 
         Task AddAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default(CancellationToken));
 
-        void UpdateAsync(T entity);
+        Task UpdateAsync(T entity);
     }
 }

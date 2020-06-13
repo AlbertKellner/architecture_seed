@@ -1,4 +1,5 @@
-﻿using ApiEndpoint.Models.Request;
+﻿using System.Threading.Tasks;
+using ApiEndpoint.Models.Request;
 using ApiEndpoint.Models.Response;
 using Core.Contracts;
 
@@ -20,18 +21,18 @@ namespace ApiEndpoint.Controllers
         public UsuarioController(IGenericCore<UsuarioEntity> genericCore, IMapper mapper) =>
             _controllerOperations = new ControllerOperations<UsuarioEntity, UsuarioRequestModel, UsuarioResponseModel>(genericCore, mapper);
 
-        public ApiResponse<List<UsuarioResponseModel>> Get() => _controllerOperations.Get();
+        public async Task<ApiResponse<List<UsuarioResponseModel>>> Get() => await _controllerOperations.GetAsync();
 
         [HttpGet("{id}")]
-        public ApiResponse<UsuarioResponseModel> Get(int id) => _controllerOperations.Get(id);
+        public async Task<ApiResponse<UsuarioResponseModel>> Get(int id) => await _controllerOperations.GetAsync(id);
 
         [HttpPost]
-        public ApiResponse<UsuarioResponseModel> Insert([FromBody] UsuarioRequestModel requestModel) => _controllerOperations.Insert(requestModel);
+        public async Task<ApiResponse<UsuarioResponseModel>> Insert([FromBody] UsuarioRequestModel requestModel) => await _controllerOperations.InsertAsync(requestModel);
 
         [HttpPut]
-        public ApiResponse<UsuarioResponseModel> Update([FromBody] UsuarioRequestModel requestModel) => _controllerOperations.Update(requestModel);
+        public async Task<ApiResponse<UsuarioResponseModel>> Update([FromBody] UsuarioRequestModel requestModel) => await _controllerOperations.UpdateAsync(requestModel);
 
         [HttpDelete]
-        public ApiResponse Delete([FromBody] UsuarioRequestModel requestModel) => _controllerOperations.Delete(requestModel);
+        public async Task<ApiResponse> Delete([FromBody] UsuarioRequestModel requestModel) => await _controllerOperations.DeleteAsync(requestModel);
     }
 }

@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Core.Contracts;
 using CustomExceptions;
@@ -13,45 +15,48 @@ namespace Core
     public class FarmaciaCore : IGenericCoreDto<FarmaciaDto, FarmaciaEntity>
     {
         private readonly IMapper _mapper;
-        private readonly IRepository<FarmaciaEntity> _repository;
+        private readonly IRepositoryAsync<FarmaciaEntity> _repository;
         private readonly IUnitOfWork _unitOfWork;
 
         public FarmaciaCore(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
-            _repository = _unitOfWork.GetRepository<FarmaciaEntity>();
+            _repository = _unitOfWork.GetRepositoryAsync<FarmaciaEntity>();
             _mapper = mapper;
         }
 
-        public IEnumerable<FarmaciaEntity> All() => _repository.GetList().Items;
-        //public IEnumerable<FarmaciaEntity> Get() => _repository.GetList(e => e.UsuarioEntityId == userId, null, null, 0, disableTracking: true).Items;
+        public async Task<IEnumerable<FarmaciaEntity>> AllAsync() => (await _repository.GetListAsync()).Items;
+        //public IEnumerable<FarmaciaEntity> GetAsync() => _repository.GetList(e => e.UsuarioEntityId == userId, null, null, 0, disableTracking: true).Items;
 
-        public FarmaciaEntity GetById(int id) => _repository.Single(e => e.Id == id, disableTracking: true);
+        public async Task<FarmaciaEntity> GetByIdAsync(int id) => await _repository.SingleAsync(e => e.Id == id, disableTracking: true);
 
-        public FarmaciaEntity Insert(FarmaciaDto entityDto)
+        public async Task<FarmaciaEntity> InsertAsync(FarmaciaDto entityDto)
         {
             var entity = _mapper.Map<FarmaciaDto, FarmaciaEntity>(entityDto);
 
             if (!entity.IsValid())
                 throw new ValidationException(entity.ValidationErrors.First());
 
-            var isEntityExists = _repository.Single(o => o.Nome == entity.Nome)?.Id > 0;
+            var farmaciaEntity = await _repository.SingleAsync(o => o.Nome == entity.Nome);
+
+            var isEntityExists = farmaciaEntity?.Id > 0;
 
             if (isEntityExists)
                 throw new AlreadyExistsCustomException();
 
             //entity.UsuarioEntityId = userId;
 
-            _repository.Add(entity);
+            await _repository.AddAsync(entity);
+
             _unitOfWork.SaveChanges();
             _unitOfWork.DetachEntry(entity);
 
             return entity;
         }
 
-        public FarmaciaEntity Update(FarmaciaDto entityDto)
+        public async Task<FarmaciaEntity> UpdateAsync(FarmaciaDto entityDto)
         {
-            var exists = GetById(entityDto.Id)?.Id > 0;
+            var exists = (await GetByIdAsync(entityDto.Id))?.Id > 0;
 
             if (!exists)
                 throw new NotFoundCustomException();
@@ -59,16 +64,17 @@ namespace Core
             var entity = _mapper.Map<FarmaciaDto, FarmaciaEntity>(entityDto);
             //entity.UsuarioEntityId = userId;
 
-            _repository.Update(entity);
+            await _repository.UpdateAsync(entity);
             _unitOfWork.SaveChanges();
 
-            return GetById(entityDto.Id);
+            return await GetByIdAsync(entityDto.Id);
         }
 
-        public void Delete(FarmaciaDto entity)
+        public async Task DeleteAsync(FarmaciaDto entity)
         {
-            _repository.Delete(entity.Id);
-            _unitOfWork.SaveChanges();
+            throw new NotImplementedException();
+            //_repository.Delete(entity.Id);
+            //_unitOfWork.SaveChanges();
         }
     }
 }

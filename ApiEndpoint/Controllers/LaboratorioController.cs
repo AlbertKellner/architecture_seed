@@ -1,4 +1,5 @@
-﻿using ApiEndpoint.Models.Request;
+﻿using System.Threading.Tasks;
+using ApiEndpoint.Models.Request;
 using ApiEndpoint.Models.Response;
 using Core.Contracts;
 
@@ -22,22 +23,22 @@ namespace ApiEndpoint.Controllers
             _controllerOperationsDto = new ControllerOperationsDto<LaboratorioDto, LaboratorioEntity, LaboratorioRequestModel, LaboratorioResponseModel>(coreDto, mapper);
 
         [HttpGet]
-        public ApiResponse<List<LaboratorioResponseModel>> Get() => _controllerOperationsDto.Get();
+        public async Task<ApiResponse<List<LaboratorioResponseModel>>> Get() => await _controllerOperationsDto.GetAsync();
 
         [HttpGet("{laboratorioId}")]
-        public ApiResponse<LaboratorioResponseModel> Get(int laboratorioId) =>
-            _controllerOperationsDto.Get(laboratorioId);
+        public async Task<ApiResponse<LaboratorioResponseModel>> Get(int laboratorioId) =>
+            await _controllerOperationsDto.GetAsync(laboratorioId);
 
         [HttpPost]
-        public ApiResponse<LaboratorioResponseModel> Insert([FromBody] LaboratorioRequestModel requestModel) =>
-            _controllerOperationsDto.Insert(requestModel);
+        public async Task<ApiResponse<LaboratorioResponseModel>> Insert([FromBody] LaboratorioRequestModel requestModel) =>
+            await _controllerOperationsDto.InsertAsync(requestModel);
 
         [HttpPut]
-        public ApiResponse<LaboratorioResponseModel> Update([FromBody] LaboratorioRequestModel requestModel) =>
-            _controllerOperationsDto.Update(requestModel);
+        public async Task<ApiResponse<LaboratorioResponseModel>> Update([FromBody] LaboratorioRequestModel requestModel) =>
+            await _controllerOperationsDto.UpdateAsync(requestModel);
 
         [HttpDelete]
-        public ApiResponse Delete([FromBody] LaboratorioRequestModel requestModel) =>
-            _controllerOperationsDto.Delete(requestModel);
+        public async Task<ApiResponse> Delete([FromBody] LaboratorioRequestModel requestModel) =>
+            await _controllerOperationsDto.DeleteAsync(requestModel);
     }
 }

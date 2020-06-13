@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Core.Contracts;
 using DataEntity.Model;
 using Repository.Contracts;
@@ -7,27 +9,28 @@ namespace Core
 {
     public class UsuarioCore : IGenericCore<UsuarioEntity>
     {
-        private readonly IRepository<UsuarioEntity> _repository;
+        private readonly IRepositoryAsync<UsuarioEntity> _repository;
         private readonly IUnitOfWork _unitOfWork;
 
         public UsuarioCore(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _repository = _unitOfWork.GetRepository<UsuarioEntity>();
+            _repository = _unitOfWork.GetRepositoryAsync<UsuarioEntity>();
         }
 
-        public IEnumerable<UsuarioEntity> Get() => _repository.GetList().Items;
+        public async Task<IEnumerable<UsuarioEntity>> GetAsync() => (await _repository.GetListAsync()).Items;
 
-        public UsuarioEntity Get(int id) => _repository.Single(e => e.Id == id);
+        public async Task<UsuarioEntity> GetAsync(int id) => await _repository.SingleAsync(e => e.Id == id);
 
-        public UsuarioEntity GetByIdentity(string id) => _repository.Single(e => e.IdentityId == id);
+        public async Task<UsuarioEntity> GetByIdentityAsync(string id) => await _repository.SingleAsync(e => e.IdentityId == id);
 
-        public UsuarioEntity Insert(UsuarioEntity entity) => new UsuarioEntity();
+        public async Task<UsuarioEntity> InsertAsync(UsuarioEntity entity) => await Task.Run(() => new UsuarioEntity());
 
-        public UsuarioEntity Update(UsuarioEntity entity) => new UsuarioEntity();
+        public async Task<UsuarioEntity> UpdateAsync(UsuarioEntity entity) => await Task.Run(() => new UsuarioEntity());
 
-        public void Delete(UsuarioEntity entity)
+        public async Task DeleteAsync(UsuarioEntity entity)
         {
+            await Task.CompletedTask;
             //_repository.Delete(entity.Id);
             //_unitOfWork.SaveChanges();
         }

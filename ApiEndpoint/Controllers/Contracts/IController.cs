@@ -1,4 +1,5 @@
-﻿using ApiEndpoint.Models.Response;
+﻿using System.Threading.Tasks;
+using ApiEndpoint.Models.Response;
 
 namespace ApiEndpoint.Controllers.Contracts
 {
@@ -7,14 +8,10 @@ namespace ApiEndpoint.Controllers.Contracts
 
     public interface IController<in TRequestModel, TResponseModel> where TRequestModel : new() where TResponseModel : new()
     {
-        ApiResponse<List<TResponseModel>> Get();
-
-        ApiResponse<TResponseModel> Get(int id);
-
-        ApiResponse<TResponseModel> Insert([FromBody] TRequestModel requestModel);
-
-        ApiResponse<TResponseModel> Update([FromBody] TRequestModel requestModel);
-
-        ApiResponse Delete([FromBody] TRequestModel requestModel);
+        Task<ApiResponse<List<TResponseModel>>> Get();
+        Task<ApiResponse<TResponseModel>> Get(int id);
+        Task<ApiResponse<TResponseModel>> Insert([FromBody] TRequestModel requestModel);
+        Task<ApiResponse<TResponseModel>> Update([FromBody] TRequestModel requestModel);
+        Task<ApiResponse> Delete([FromBody] TRequestModel requestModel);
     }
 }

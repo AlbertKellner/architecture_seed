@@ -1,4 +1,5 @@
-﻿using ApiEndpoint.Models.Response;
+﻿using System.Threading.Tasks;
+using ApiEndpoint.Models.Response;
 using Core.Contracts;
 
 namespace ApiEndpoint.Operations
@@ -11,9 +12,7 @@ namespace ApiEndpoint.Operations
     using Controllers.Bases;
     using DataTransferObject;
 
-    public class
-        ControllerOperationsDto<TEntityDto, TEntity, TRequestModel, TResponseModel> : IBasicOperation<TRequestModel,
-            TResponseModel>
+    public class ControllerOperationsDto<TEntityDto, TEntity, TRequestModel, TResponseModel> : IBasicOperation<TRequestModel, TResponseModel>
         where TEntityDto : BaseEntityDto, new()
         where TEntity : new()
         where TRequestModel : new()
@@ -28,14 +27,14 @@ namespace ApiEndpoint.Operations
             _mapper = mapper;
         }
 
-        public ApiResponse<List<TResponseModel>> Get()
+        public async Task<ApiResponse<List<TResponseModel>>> GetAsync()
         {
             List<TEntity> responseEntities;
             const int userId = 0;
 
             try
             {
-                responseEntities = (List<TEntity>) _genericCoreDto.All();
+                responseEntities = await _genericCoreDto.AllAsync() as List<TEntity>;
             }
             catch (Exception exception)
             {
@@ -49,14 +48,13 @@ namespace ApiEndpoint.Operations
                 : BaseResponse.ResponseOk(responseModel);
         }
 
-        public ApiResponse<TResponseModel> Get(int id)
+        public async Task<ApiResponse<TResponseModel>> GetAsync(int id)
         {
             TEntity responseEntity;
-            const int userId = 0;
 
             try
             {
-                responseEntity = _genericCoreDto.GetById(id);
+                responseEntity = await _genericCoreDto.GetByIdAsync(id);
             }
             catch (Exception exception)
             {
@@ -70,16 +68,15 @@ namespace ApiEndpoint.Operations
                 : BaseResponse.ResponseOk(responseModel);
         }
 
-        public ApiResponse<TResponseModel> Insert(TRequestModel requestModel)
+        public async Task<ApiResponse<TResponseModel>> InsertAsync(TRequestModel requestModel)
         {
             var requestEntityDto = _mapper.Map<TRequestModel, TEntityDto>(requestModel);
 
             TEntity responseEntity;
-            const int userId = 0;
 
             try
             {
-                responseEntity = _genericCoreDto.Insert(requestEntityDto);
+                responseEntity = await _genericCoreDto.InsertAsync(requestEntityDto);
             }
             catch (Exception exception)
             {
@@ -91,16 +88,15 @@ namespace ApiEndpoint.Operations
             return BaseResponse.ResponseCreated(responseModel);
         }
 
-        public ApiResponse<TResponseModel> Update(TRequestModel requestModel)
+        public async Task<ApiResponse<TResponseModel>> UpdateAsync(TRequestModel requestModel)
         {
             var requestEntityDto = _mapper.Map<TRequestModel, TEntityDto>(requestModel);
 
             TEntity responseEntity;
-            const int userId = 0;
 
             try
             {
-                responseEntity = _genericCoreDto.Update(requestEntityDto);
+                responseEntity = await _genericCoreDto.UpdateAsync(requestEntityDto);
             }
             catch (Exception exception)
             {
@@ -112,14 +108,13 @@ namespace ApiEndpoint.Operations
             return BaseResponse.ResponseOk(responseModel);
         }
 
-        public ApiResponse Delete(TRequestModel requestModel)
+        public async Task<ApiResponse> DeleteAsync(TRequestModel requestModel)
         {
             var requestEntityDto = _mapper.Map<TRequestModel, TEntityDto>(requestModel);
-            const int userId = 0;
 
             try
             {
-                _genericCoreDto.Delete(requestEntityDto);
+                await _genericCoreDto.DeleteAsync(requestEntityDto);
             }
             catch (Exception exception)
             {

@@ -1,4 +1,5 @@
-﻿using ApiEndpoint.Models.Response;
+﻿using System.Threading.Tasks;
+using ApiEndpoint.Models.Response;
 using Core.Contracts;
 
 namespace ApiEndpoint.Operations
@@ -24,13 +25,13 @@ namespace ApiEndpoint.Operations
             _mapper = mapper;
         }
 
-        public ApiResponse<List<TResponseModel>> GetAll(int parentId)
+        public async Task<ApiResponse<List<TResponseModel>>> GetAllAsync(int parentId)
         {
             List<TEntity> responseEntities;
 
             try
             {
-                responseEntities = (List<TEntity>) _parentChildrenCoreDto.All(parentId);
+                responseEntities = await _parentChildrenCoreDto.AllAsync(parentId) as List<TEntity>;
             }
             catch (Exception exception)
             {
@@ -42,13 +43,13 @@ namespace ApiEndpoint.Operations
             return !responseModel.Any() ? BaseResponse.ResponseNotFound((List<TResponseModel>) null) : BaseResponse.ResponseOk(responseModel);
         }
 
-        public ApiResponse<TResponseModel> Get(int parentId, int childId)
+        public async Task<ApiResponse<TResponseModel>> GetAsync(int parentId, int childId)
         {
             TEntity responseEntity;
 
             try
             {
-                responseEntity = _parentChildrenCoreDto.GetById(parentId, childId);
+                responseEntity = await _parentChildrenCoreDto.GetByIdAsync(parentId, childId);
             }
             catch (Exception exception)
             {
@@ -60,14 +61,14 @@ namespace ApiEndpoint.Operations
             return responseModel == null || responseModel.Id == 0 ? BaseResponse.ResponseNotFound((TResponseModel) null) : BaseResponse.ResponseOk(responseModel);
         }
 
-        public ApiResponse<TResponseModel> Insert(int parentId, TRequestModel requestModel)
+        public async Task<ApiResponse<TResponseModel>> InsertAsync(int parentId, TRequestModel requestModel)
         {
             var requestEntityDto = _mapper.Map<TRequestModel, TEntityDto>(requestModel);
             TEntity responseEntity;
 
             try
             {
-                responseEntity = _parentChildrenCoreDto.Insert(parentId, requestEntityDto);
+                responseEntity = await _parentChildrenCoreDto.InsertAsync(parentId, requestEntityDto);
             }
             catch (Exception exception)
             {
@@ -79,14 +80,14 @@ namespace ApiEndpoint.Operations
             return BaseResponse.ResponseCreated(responseModel);
         }
 
-        public ApiResponse<TResponseModel> Update(int parentId, TRequestModel requestModel)
+        public async Task<ApiResponse<TResponseModel>> UpdateAsync(int parentId, TRequestModel requestModel)
         {
             var requestEntityDto = _mapper.Map<TRequestModel, TEntityDto>(requestModel);
             TEntity responseEntity;
 
             try
             {
-                responseEntity = _parentChildrenCoreDto.Update(parentId);
+                responseEntity = await _parentChildrenCoreDto.UpdateAsync(parentId);
             }
             catch (Exception exception)
             {
@@ -98,13 +99,13 @@ namespace ApiEndpoint.Operations
             return BaseResponse.ResponseOk(responseModel);
         }
 
-        public ApiResponse Delete(int parentId, TRequestModel requestModel)
+        public async Task<ApiResponse> DeleteAsync(int parentId, TRequestModel requestModel)
         {
             var requestEntityDto = _mapper.Map<TRequestModel, TEntityDto>(requestModel);
 
             try
             {
-                _parentChildrenCoreDto.Delete(parentId, requestEntityDto);
+                await _parentChildrenCoreDto.DeleteAsync(parentId, requestEntityDto);
             }
             catch (Exception exception)
             {

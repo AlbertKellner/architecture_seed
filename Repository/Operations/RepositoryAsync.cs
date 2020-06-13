@@ -28,6 +28,7 @@
             Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, bool disableTracking = true)
         {
             IQueryable<T> query = _dbSet;
+
             if (disableTracking) query = query.AsNoTracking();
 
             if (include != null) query = include(query);
@@ -36,6 +37,7 @@
 
             if (orderBy != null)
                 return await orderBy(query).FirstOrDefaultAsync();
+
             return await query.FirstOrDefaultAsync();
         }
 
@@ -56,6 +58,7 @@
 
             if (orderBy != null)
                 return orderBy(query).ToPaginateAsync(index, size, 0, cancellationToken);
+
             return query.ToPaginateAsync(index, size, 0, cancellationToken);
         }
 
@@ -73,7 +76,7 @@
         [Obsolete("Use get list ")]
         public IEnumerable<T> GetAsync(Expression<Func<T, bool>> predicate) => throw new NotImplementedException();
 
-        public void UpdateAsync(T entity) => _dbSet.Update(entity);
+        public async Task UpdateAsync(T entity) => await Task.Run(() => _dbSet.Update(entity));
 
         public ValueTask<EntityEntry<T>> AddAsync(T entity) => AddAsync(entity, new CancellationToken());
     }

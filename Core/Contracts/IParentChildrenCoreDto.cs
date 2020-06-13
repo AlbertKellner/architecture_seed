@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Core.Contracts
 {
-    public interface IParentChildrenCoreDto<in TEntityDto, out TEntity>
+    public interface IParentChildrenCoreDto<in TEntityDto, TEntity>
     {
-        IEnumerable<TEntity> All(int parentId);
-        TEntity GetById(int parentId, int childId);
-        TEntity Insert(int parentId, TEntityDto entityDto);
-        TEntity Update(int parentId);
-        void Delete(int parentId, TEntityDto entityDto);
+        Task<IEnumerable<TEntity>> AllAsync(int parentId);
+        Task<TEntity> GetByIdAsync(int parentId, int childId);
+        Task<TEntity> InsertAsync(int parentId, TEntityDto entityDto);
+        Task<TEntity> UpdateAsync(int parentId);
+        Task DeleteAsync(int parentId, TEntityDto entityDto);
     }
 }

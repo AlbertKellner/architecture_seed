@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ApiEndpoint.Controllers;
 using ApiEndpoint.Models.Request;
 using ApiEndpoint.Models.Response;
@@ -17,7 +18,7 @@ namespace ApiEndpoint.Tests
         private readonly Mock<IGenericCore<UsuarioEntity>> _mockCore = new Mock<IGenericCore<UsuarioEntity>>();
 
         [Fact]
-        public void GetAll()
+        public async Task GetAll()
         {
             var mappingService = new Mock<IMapper>();
 
@@ -36,7 +37,7 @@ namespace ApiEndpoint.Tests
                 new UsuarioResponseModel { Id = 3 }
             };
 
-            _mockCore.Setup(x => x.Get()).Returns(usuarioEntity);
+            _mockCore.Setup(x => (x.GetAsync())).ReturnsAsync(usuarioEntity);
 
             mappingService.Setup(m => m.Map<List<UsuarioEntity>, List<UsuarioResponseModel>>(It.IsAny<List<UsuarioEntity>>())).Returns(usuarioResponseModel);
 
@@ -49,14 +50,14 @@ namespace ApiEndpoint.Tests
             };
 
             //Act
-            var apiResponse = controller.Get();
+            var apiResponse = await controller.Get();
 
             //Assert
             Assert.Equal(apiResponse.Data[0].Id, usuarioEntity[0].Id);
         }
 
         [Fact]
-        public void GetById()
+        public async Task GetById()
         {
             var mappingService = new Mock<IMapper>();
 
@@ -65,7 +66,7 @@ namespace ApiEndpoint.Tests
 
             var usuarioResponseModel = new UsuarioResponseModel { Id = 1 };
 
-            _mockCore.Setup(x => x.Get(1)).Returns(usuarioEntity);
+            _mockCore.Setup(x => x.GetAsync(1)).ReturnsAsync(usuarioEntity);
 
             mappingService.Setup(m => m.Map<UsuarioEntity, UsuarioResponseModel>(It.IsAny<UsuarioEntity>())).Returns(usuarioResponseModel);
 
@@ -78,14 +79,14 @@ namespace ApiEndpoint.Tests
             };
 
             //Act
-            var apiResponse = controller.Get(1);
+            var apiResponse = await controller.Get(1);
 
             //Assert
             Assert.Equal(apiResponse.Data.Id, usuarioEntity.Id);
         }
 
         [Fact]
-        public void Insert()
+        public async Task Insert()
         {
             var mappingService = new Mock<IMapper>();
 
@@ -97,7 +98,7 @@ namespace ApiEndpoint.Tests
             var usuarioResponseModel = new UsuarioResponseModel { Id = 1, Nome = "teste" };
             
 
-            _mockCore.Setup(x => x.Insert(usuarioEntity)).Returns(usuarioEntity);
+            _mockCore.Setup(x => x.InsertAsync(usuarioEntity)).ReturnsAsync(usuarioEntity);
 
             mappingService.Setup(m => m.Map<UsuarioEntity, UsuarioResponseModel>(It.IsAny<UsuarioEntity>())).Returns(usuarioResponseModel);
 
@@ -110,7 +111,7 @@ namespace ApiEndpoint.Tests
             };
 
             //Act
-            var apiResponse = controller.Insert(usuarioRequestModel);
+            var apiResponse = await controller.Insert(usuarioRequestModel);
 
             //Assert
             Assert.Equal(apiResponse.Data.Id, usuarioEntity.Id);

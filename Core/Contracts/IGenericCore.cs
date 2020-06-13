@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Core.Contracts
 {
     public interface IGenericCore<TEntity>
     {
-        IEnumerable<TEntity> Get();
-        TEntity Get(int id);
-        TEntity Insert(TEntity entity);
-        TEntity Update(TEntity entity);
-        void Delete(TEntity entity);
+        Task<IEnumerable<TEntity>> GetAsync();
+        Task<TEntity> GetAsync(int id);
+        Task<TEntity> InsertAsync(TEntity entity);
+        Task<TEntity> UpdateAsync(TEntity entity);
+        Task DeleteAsync(TEntity entity);
     }
 }
